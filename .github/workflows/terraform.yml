@@ -1,0 +1,22 @@
+name: "Terraform"
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  terraform:
+    name: "Terraform"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout builder
+        uses: actions/checkout@v2
+    
+      - name: Checkout state
+        uses: actions/checkout@v2
+        with:
+          repository: dorgeln/infrastate
+          ssh-key: ${{ secrets.SSH_DEPLOY_KEY }}
+ 
