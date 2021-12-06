@@ -19,4 +19,5 @@ jobs:
         with:
           repository: dorgeln/infrastate
           ssh-key: ${{ secrets.SSH_DEPLOY_KEY }}
+          path: terraform
  
