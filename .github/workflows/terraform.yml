@@ -20,4 +20,14 @@ jobs:
           repository: dorgeln/infrastate
           ssh-key: ${{ secrets.SSH_DEPLOY_KEY }}
           path: terraform
+
+      - name: Create test file
+        run: date +%s > terraform/test.txt
+      - name: Commit test
+        run: |
+          git config --global user.name 'Infrabuilder'
+          git config --global user.email 'infrabuilder@users.noreply.github.com'
+          pushd terraform
+          git commit -am "Automated test"
+          git push
  
