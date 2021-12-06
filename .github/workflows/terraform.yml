@@ -28,6 +28,7 @@ jobs:
           git config --global user.name 'Infrabuilder'
           git config --global user.email 'infrabuilder@users.noreply.github.com'
           pushd terraform
+          git add -A
           git commit -am "Automated test"
           git push
  
