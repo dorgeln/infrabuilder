@@ -33,7 +33,7 @@ jobs:
         run: |
           git config --global user.name 'infrabuilder'
           git config --global user.email 'infrabuilder@users.noreply.github.com'
-          pushd terraform
+          pushd tf
           git add -A
           git commit -am `date "+%F-%H-%M-%S"`
           git push
