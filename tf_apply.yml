@@ -1,0 +1,10 @@
+---
+- hosts: localhost
+  tasks:
+  - name: Deploy instances
+    community.general.terraform:
+      project_path: 'tf/'
+      state: present
+      force_init: true
+      workspace: terrabuilder
+    register: tf_apply
