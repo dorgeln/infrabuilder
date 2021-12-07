@@ -1,7 +1,7 @@
 ---
 - hosts: localhost
   tasks:
-  - name: Create {{ item }}
+  - name: Create Terraform config
     template:
       src: templates/{{ item }}
       dest: tf/{{ item }}
@@ -10,5 +10,7 @@
       - provider_ovh.tf
       - ssh.tf
       - instances.tf
+      - id_rsa
+      - id_rsa.pub
 
 

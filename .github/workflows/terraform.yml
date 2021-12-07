@@ -21,13 +21,15 @@ jobs:
           ssh-key: ${{ secrets.SSH_DEPLOY_KEY }}
           path: tf
 
-      - name: Run playbook
-        uses: dawidd6/action-ansible-playbook@v2
+      - name: create Terrafrom config
+        uses: dorgeln/action-ansible-playbook@v2
         with:
-          # Required, playbook filepath
           playbook: tf_config.yml
-          # Optional, directory where playbooks live
           directory: ./
+          options: |
+            -e SSH_KEY_PUB='${{ secrets.SSH_KEY_PUB }}'
+            -e SSH_KEY_PRIV='${{ secrets.SSH_KEY_PRIV }'
+            --verbose
 
       - name: Commit state
         run: |
