@@ -1,3 +1,11 @@
+#Terraform
 .terraform/
 .terraform.lock.hcl
 terraform.tfstate
+tf/
+
+# SSH
+.ssh/
+
+# ENV
+.env

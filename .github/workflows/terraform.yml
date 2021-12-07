@@ -19,13 +19,19 @@ jobs:
         with:
           repository: dorgeln/infrastate
           ssh-key: ${{ secrets.SSH_DEPLOY_KEY }}
-          path: terraform
+          path: tf
 
-      - name: Create test file
-        run: date +%s > terraform/test.txt
+      - name: Run playbook
+        uses: dawidd6/action-ansible-playbook@v2
+        with:
+          # Required, playbook filepath
+          playbook: tf_config.yml
+          # Optional, directory where playbooks live
+          directory: ./
+
       - name: Commit state
         run: |
-          git config --global user.name 'Infrabuilder'
+          git config --global user.name 'infrabuilder'
           git config --global user.email 'infrabuilder@users.noreply.github.com'
           pushd terraform
           git add -A
