@@ -21,7 +21,7 @@ jobs:
           ssh-key: ${{ secrets.SSH_DEPLOY_KEY }}
           path: tf
 
-      - name: create Terrafrom config
+      - name: Create Terrafrom config
         uses: dorgeln/action-ansible-playbook@v2
         with:
           playbook: tf_config.yml
@@ -37,6 +37,6 @@ jobs:
           git config --global user.email 'infrabuilder@users.noreply.github.com'
           pushd tf
           git add -A
-          git commit -am `date "+%F-%H-%M-%S"`
+          git diff-index --quiet HEAD || git commit -am `date "+%F-%H-%M-%S"`
           git push
  
