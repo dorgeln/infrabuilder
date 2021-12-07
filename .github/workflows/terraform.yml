@@ -27,6 +27,7 @@ jobs:
           playbook: tf_config.yml
           directory: ./
           options: |
+            -e "TF_PROVIDER='${{ secrets.TF_PROVIDER }}'"
             -e "SSH_KEY_PUB='${{ secrets.SSH_KEY_PUB }}'"
             -e "SSH_KEY_PRIV='${{ secrets.SSH_KEY_PRIV }}'"
             --verbose
