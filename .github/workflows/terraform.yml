@@ -78,7 +78,7 @@ jobs:
       - name: Apply Terraform config
         uses: dorgeln/action-ansible-playbook@v2
         with:
-          playbook: tf_applyyml
+          playbook: tf_apply.yml
           directory: ./
           options: |
             -e "TF_PROVIDER='${{ secrets.TF_PROVIDER }}'"
