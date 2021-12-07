@@ -31,7 +31,27 @@ jobs:
             -e SSH_KEY_PRIV='${{ secrets.SSH_KEY_PRIV }}'
             --verbose
 
-      - name: Commit state
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+
+      - name: Terraform Init
+        id: init
+        run: terraform -chdir=tf init 
+        
+      - name: Terraform Validate
+        id: validate
+        run: terraform -chdir=tf validate -no-color
+
+      - name: Terraform Plan
+        id: plan
+        run: terraform -chdir=tf plan -no-color
+        continue-on-error: true
+
+      - name: Terraform Plan Status
+        if: steps.plan.outcome == 'failure'
+        run: exit 1
+
+      - name: Commit Terraform state
         run: |
           git config --global user.name 'infrabuilder'
           git config --global user.email 'infrabuilder@users.noreply.github.com'
