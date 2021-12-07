@@ -64,6 +64,9 @@ jobs:
           OS_PASSWORD: ${{ secrets.OS_PASSWORD }}
           OS_REGION_NAME: ${{ secrets.OS_REGION_NAME }}
 
+      - name: Debug Terraform state
+        run: terraform -chdir=tf state pull
+
       - name: Commit Terraform state
         run: |
           git config --global user.name 'infrabuilder'
