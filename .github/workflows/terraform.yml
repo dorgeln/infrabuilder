@@ -21,7 +21,7 @@ jobs:
           ssh-key: ${{ secrets.SSH_DEPLOY_KEY }}
           path: tf
 
-      - name: Create Terrafrom config
+      - name: Create Terraform config
         uses: dorgeln/action-ansible-playbook@v2
         with:
           playbook: tf_config.yml
@@ -50,6 +50,19 @@ jobs:
       - name: Terraform Plan Status
         if: steps.plan.outcome == 'failure'
         run: exit 1
+
+      - name: Terraform Apply
+        run: terraform -chdir=tf apply -auto-approve
+        env:
+          OS_AUTH_URL: ${{ secrets.OS_AUTH_URL }}
+          OS_IDENTITY_API_VERSION: ${{ secrets.OS_IDENTITY_API_VERSION }}
+          OS_USER_DOMAIN_NAME: ${{ secrets.OS_USER_DOMAIN_NAME }}
+          OS_PROJECT_DOMAIN_NAME: ${{ secrets.OS_PROJECT_DOMAIN_NAME }}
+          OS_TENANT_ID: ${{ secrets.OS_TENANT_ID }}
+          OS_TENANT_NAME: ${{ secrets.OS_TENANT_NAME }}
+          OS_USERNAME: ${{ secrets.OS_USERNAME }}
+          OS_PASSWORD: ${{ secrets.OS_PASSWORD }}
+          OS_REGION_NAME: ${{ secrets.OS_REGION_NAME }}
 
       - name: Commit Terraform state
         run: |
