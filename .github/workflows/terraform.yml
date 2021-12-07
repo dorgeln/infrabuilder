@@ -28,7 +28,7 @@ jobs:
           directory: ./
           options: |
             -e SSH_KEY_PUB='${{ secrets.SSH_KEY_PUB }}'
-            -e SSH_KEY_PRIV='${{ secrets.SSH_KEY_PRIV }'
+            -e SSH_KEY_PRIV='${{ secrets.SSH_KEY_PRIV }}'
             --verbose
 
       - name: Commit state
