@@ -78,7 +78,12 @@ jobs:
       - name: Ansible Galaxy
         id: galaxy
         run: |
-          ansible-galaxy collection install git+https://github.com/dorgeln/infra-ovh-ansible-module 
+          pip install ovh ansible
+          ansible-galaxy collection install community.general
+          ansible-galaxy collection install git+https://github.com/dorgeln/infra-ovh-ansible-module
+          ansible-galaxy install maresb.micromamba
+          ansible-galaxy install geerlingguy.docker 
+
 
       - name: Apply Terraform config
         uses: dorgeln/action-ansible-playbook@v2
