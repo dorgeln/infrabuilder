@@ -9,3 +9,6 @@ tf/
 
 # ENV
 .env
+
+# Python
+***.pyc
