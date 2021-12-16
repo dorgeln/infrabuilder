@@ -32,15 +32,12 @@ jobs:
         
 
       - name: Create Terraform config
-        uses: dorgeln/action-ansible-playbook@v2
-        with:
-          playbook: tf_config.yml
-          directory: ./
-          options: |
-            -e "TF_PROVIDER='${{ secrets.TF_PROVIDER }}'"
-            -e "SSH_KEY_PUB='${{ secrets.SSH_KEY_PUB }}'"
-            -e "SSH_KEY_PRIV='${{ secrets.SSH_KEY_PRIV }}'"
-            --verbose
+        run: |
+          ansible-playbook \
+            -e "TF_PROVIDER='${{ secrets.TF_PROVIDER }}'" \
+            -e "SSH_KEY_PUB='${{ secrets.SSH_KEY_PUB }}'" \
+            -e "SSH_KEY_PRIV='${{ secrets.SSH_KEY_PRIV }}'" \
+            tf_config.yml
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
