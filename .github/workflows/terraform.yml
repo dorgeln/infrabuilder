@@ -89,10 +89,12 @@ jobs:
           OS_PASSWORD: ${{ secrets.OS_PASSWORD }}
           OS_REGION_NAME: ${{ secrets.OS_REGION_NAME }}
 
-
-
       - name: Debug Terraform state
         run: terraform -chdir=tf state pull
+
+ 
+      - name: Debug inventory
+        run: ansible-inventory --playbook-dir . -i tf_inventory.yml -vvv --list
 
       - name: Commit Terraform state
         run: |
@@ -102,6 +104,3 @@ jobs:
           git add -A
           git diff-index --quiet HEAD || git commit -am `date "+%F-%H-%M-%S"`
           git push
- 
-      - name: Debug inventory
-        run: ansible-inventory --playbook-dir . -i tf_inventory.yml -vvv --list
