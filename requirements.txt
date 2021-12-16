@@ -1,5 +1,7 @@
-ansible
-ovh
-certbot
-certbot-dns-ovh
+ansible==4.8.0
+ansible-core==2.11.6
+ovh==0.5.0
+certbot-dns-ovh==1.22.0
+
+
 
