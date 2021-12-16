@@ -4,8 +4,8 @@
 terraform.tfstate
 tf/
 
-# SSH
-.ssh/
+# Secrets
+.secrets
 
 # ENV
 .env

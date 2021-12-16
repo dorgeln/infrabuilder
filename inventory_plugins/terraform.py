@@ -22,6 +22,7 @@ from ansible.plugins.inventory import BaseInventoryPlugin
 from ansible.errors import AnsibleError, AnsibleParserError
 import subprocess
 import json
+import ast
 
 
 class InventoryModule(BaseInventoryPlugin):
@@ -64,8 +65,9 @@ class InventoryModule(BaseInventoryPlugin):
                             ansible_host = a['access_ip_v4']
 
                             if 'all_metadata' in a:
-                                print(a['all_metadata'])
+                                # print(a['all_metadata'])
                                 if 'ansible_group' in a['all_metadata']:
+
                                     group=a['all_metadata']['ansible_group']
                                 else:
                                     group=self.plugin
@@ -74,12 +76,21 @@ class InventoryModule(BaseInventoryPlugin):
                                     ansible_user=a['all_metadata']['ansible_user']
                                 else:
                                     ansible_user=None
+
                                 
                             self.inventory.add_group(group)
                             self.inventory.add_host(host=host, group=group)
                             self.inventory.set_variable(host, 'ansible_host', ansible_host)
                             if ansible_user:
                                 self.inventory.set_variable(host, 'ansible_user', ansible_user)
+
+                            if 'ansible_hostvars' in a['all_metadata']:
+                                hostvars = ast.literal_eval(a['all_metadata']['ansible_hostvars'])
+                                for hostvar in hostvars.keys():
+                                    self.inventory.set_variable(host, hostvar, hostvars[hostvar])
+                                
+
+
 
    
 
