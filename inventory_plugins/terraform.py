@@ -51,6 +51,10 @@ class InventoryModule(BaseInventoryPlugin):
                 'All correct options required: {}'.format(e))
         
         tfstate_run = subprocess.run(['terraform','state','pull'],cwd=self.project_path, capture_output=True)
+        print("---\nDEBUG terraform state stdout")
+        print(tfstate_run.stdout)
+        print("---\nDEBUG terraform state stderr")
+        print(tfstate_run.stderr)
         tfstate=json.loads(tfstate_run.stdout)
 
 
