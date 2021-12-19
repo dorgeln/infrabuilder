@@ -6,8 +6,8 @@ __metaclass__ = type
 DOCUMENTATION = r'''
     name: terraform-inventory
     plugin_type: inventory
-    short_description: Returns Ansible inventory from terraform
-    description: Returns Ansible inventory from terraform
+    short_description: Returns Ansible inventory from Terraform
+    description: Returns Ansible inventory from Terraform
     options:
       plugin:
           description: Name of the plugin
@@ -54,10 +54,14 @@ class InventoryModule(BaseInventoryPlugin):
         if tfstate_cmd.returncode != 0:
             raise Exception("Terraforn state pull failed %d %s %s" % (process.returncode, output, error))
 
-        print('---\n Output')    
+        print('\n---\n Output')    
         print(output)
 
-        tfstate=json.loads(output)
+        print('\n---\n Sanitized')
+        sanitized= output[(str(output).find('{')-2):str(output).rfind('}')]
+        print(sanitized)
+
+        tfstate=json.loads(sanitized)
 
         print('---\n JSON')   
         print (tfstate)
