@@ -47,10 +47,10 @@ class InventoryModule(BaseInventoryPlugin):
             raise AnsibleParserError(
                 'All correct options required: {}'.format(e))
         
-        subprocess.run("terraform state pull > tfstate.json",cwd=self.project_path, capture_output=False, shell=True, check=True,stderr=None)
+        tfstate_cmd=subprocess.run("terraform state pull",cwd=self.project_path, capture_output=True, shell=True, check=True)
 
-        with open(os.path.join(self.project_path,'tfstate.json')) as tfstate_json:
-            tfstate=json.load(tfstate_json)
+        print(tfstate_cmd.stdout)
+        tfstate=json.loads(tfstate_cmd.stdout)
 
         for r in tfstate['resources']:
             if 'instances' in r:
