@@ -22,7 +22,7 @@ from ansible.plugins.inventory import BaseInventoryPlugin
 from ansible.errors import AnsibleError, AnsibleParserError
 import subprocess
 import json
-import ast
+import os
 
 
 class InventoryModule(BaseInventoryPlugin):
@@ -33,9 +33,6 @@ class InventoryModule(BaseInventoryPlugin):
         valid=False
         if super(InventoryModule, self).verify_file(path):
             valid=True
-            #tfvalidate = subprocess.run(['terraform','validate','-no-color'],cwd='tf')
-            #if tfvalidate.returncode==0:
-            #    valid=True
         return valid
 
     
@@ -50,16 +47,10 @@ class InventoryModule(BaseInventoryPlugin):
             raise AnsibleParserError(
                 'All correct options required: {}'.format(e))
         
-        tfstate_run = subprocess.run(['terraform','state','pull','>','tfstate.json'],cwd=self.project_path, capture_output=False)
+        subprocess.run("terraform state pull > tfstate.json",cwd=self.project_path, capture_output=False, shell=True, check=True)
 
-        print("---\nDEBUG terraform state stderr")
-        print(tfstate_run.stderr)
-        tfstate=json.loads(tfstate_run.stdout)
-
-        with open('tf/tfstate.json') as tfstate_json:
+        with open(os.path.join(self.project_path,'tfstate.json')) as tfstate_json:
             tfstate=json.load(tfstate_json)
-
-        print(tfstate)
 
         for r in tfstate['resources']:
             if 'instances' in r:
@@ -72,29 +63,18 @@ class InventoryModule(BaseInventoryPlugin):
                             ansible_host = a['access_ip_v4']
 
                             if 'all_metadata' in a:
-                                # print(a['all_metadata'])
-                                if 'ansible_group' in a['all_metadata']:
+                                if 'group' in a['all_metadata']:
 
-                                    group=a['all_metadata']['ansible_group']
-                                else:
-                                    group=self.plugin
+                                    group=a['all_metadata']['group']
+                                    self.inventory.add_group(group)
+                                    self.inventory.add_host(host=host, group=group)
+                                    self.inventory.set_variable(host, 'ansible_host', ansible_host)
 
-                                if 'ansible_user' in a['all_metadata']:
-                                    ansible_user=a['all_metadata']['ansible_user']
-                                else:
-                                    ansible_user=None
+                                for metadata in a['all_metadata']:
+                                    self.inventory.set_variable(host, metadata , a['all_metadata'][metadata])
 
-                                
-                            self.inventory.add_group(group)
-                            self.inventory.add_host(host=host, group=group)
-                            self.inventory.set_variable(host, 'ansible_host', ansible_host)
-                            if ansible_user:
-                                self.inventory.set_variable(host, 'ansible_user', ansible_user)
 
-                            if 'ansible_hostvars' in a['all_metadata']:
-                                hostvars = ast.literal_eval(a['all_metadata']['ansible_hostvars'])
-                                for hostvar in hostvars.keys():
-                                    self.inventory.set_variable(host, hostvar, hostvars[hostvar])
+    
                                 
 
 

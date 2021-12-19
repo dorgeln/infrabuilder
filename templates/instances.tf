@@ -1,12 +1,14 @@
-resource "openstack_compute_instance_v2" "{{ TF_PROVIDER }}-proxygreen" {
-   name        = "{{ TF_PROVIDER }}-proxygreen" # Instance name
+resource "openstack_compute_instance_v2" "{{ TF_PROVIDER }}-micromamba-proxy-green" {
+   name        = "{{ TF_PROVIDER }}-micromamba-proxy-green" # Instance name
    provider    = openstack.ovh  # Provider name
    image_name  = "Ubuntu 20.04" # Image name
    flavor_name = "s1-2" # Instance type name
    metadata = {
-     ansible_group = "proxy"
+     group = "proxy"
      ansible_user = "ubuntu"
-     ansible_hostvars="{'color':'green'}"
+     hostname = "mmspg{{ TF_PROVIDER }}"
+     domain = "mamba.pm"
+     color = "green"
    }
    key_pair    = openstack_compute_keypair_v2.infrabuilder-{{ TF_PROVIDER }}.name
    network {
@@ -14,15 +16,17 @@ resource "openstack_compute_instance_v2" "{{ TF_PROVIDER }}-proxygreen" {
    }
 }
 
-resource "openstack_compute_instance_v2" "{{ TF_PROVIDER }}-proxyblue" {
-   name        = "{{ TF_PROVIDER }}-proxyblue" # Instance name
+resource "openstack_compute_instance_v2" "{{ TF_PROVIDER }}-micromamba-proxy-blue" {
+   name        = "{{ TF_PROVIDER }}-micromamba-proxy-blue" # Instance name
    provider    = openstack.ovh  # Provider name
    image_name  = "Ubuntu 20.04" # Image name
    flavor_name = "s1-2" # Instance type name
    metadata = {
-     ansible_group = "proxy"
+     group = "proxy"
      ansible_user = "ubuntu"
-     ansible_hostvars="{'color':'blue','debug':True}"
+     hostname = "mmspg{{ TF_PROVIDER }}"
+     domain = "mamba.pm"
+     color = "blue"
    }
    key_pair    = openstack_compute_keypair_v2.infrabuilder-{{ TF_PROVIDER }}.name
    network {
@@ -30,15 +34,17 @@ resource "openstack_compute_instance_v2" "{{ TF_PROVIDER }}-proxyblue" {
    }
 }
 
-resource "openstack_compute_instance_v2" "{{ TF_PROVIDER }}-microgreen" {
-   name        = "{{ TF_PROVIDER }}-microgreen" # Instance name
+resource "openstack_compute_instance_v2" "{{ TF_PROVIDER }}-micromamba-server-green" {
+   name        = "{{ TF_PROVIDER }}-micromamba-server-green" # Instance name
    provider    = openstack.ovh  # Provider name
    image_name  = "Ubuntu 20.04" # Image name
    flavor_name = "s1-2" # Instance type name
    metadata = {
-     ansible_group = "micro"
+     group = "server"
      ansible_user = "ubuntu"
-     ansible_hostvars="{'color':'green'}"
+     hostname = "mmssg{{ TF_PROVIDER }}"
+     domain = "mamba.pm"
+     color = "green"
    }
    key_pair    = openstack_compute_keypair_v2.infrabuilder-{{ TF_PROVIDER }}.name
    network {
@@ -46,15 +52,17 @@ resource "openstack_compute_instance_v2" "{{ TF_PROVIDER }}-microgreen" {
    }
 }
 
-resource "openstack_compute_instance_v2" "{{ TF_PROVIDER }}-microblue" {
-   name        = "{{ TF_PROVIDER }}-microblue" # Instance name
+resource "openstack_compute_instance_v2" "{{ TF_PROVIDER }}-micromamba-server-blue" {
+   name        = "{{ TF_PROVIDER }}-micromamba-server-blue" # Instance name
    provider    = openstack.ovh  # Provider name
    image_name  = "Ubuntu 20.04" # Image name
    flavor_name = "s1-2" # Instance type name
    metadata = {
-     ansible_group = "micro"
+     group = "server"
      ansible_user = "ubuntu"
-     ansible_hostvars="{'color':'blue'}"
+     hostname = "mmssg{{ TF_PROVIDER }}"
+     domain = "mamba.pm"
+     color = "blue"
    }
    key_pair    = openstack_compute_keypair_v2.infrabuilder-{{ TF_PROVIDER }}.name
    network {

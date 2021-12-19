@@ -1,7 +1,7 @@
 ---
 - hosts:
     - proxy
-    - micro
+    - server
   roles:
     - system
     - docker
