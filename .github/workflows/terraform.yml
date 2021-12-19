@@ -89,13 +89,6 @@ jobs:
           OS_PASSWORD: ${{ secrets.OS_PASSWORD }}
           OS_REGION_NAME: ${{ secrets.OS_REGION_NAME }}
 
-      - name: Debug Terraform state
-        run: terraform -chdir=tf state pull
-
-      - name: Debug inventory
-        run: |
-           ansible-inventory -vvv --playbook-dir . -i tf_inventory.yml --list
-
       - name: Commit Terraform state
         run: |
           git config --global user.name 'infrabuilder'
@@ -107,5 +100,9 @@ jobs:
 
       - name: Deploy system
         run: |
-          ansible-playbook -i tf_inventory.yml site.yml
-
+          ansible-playbook \
+            -e "TF_PROVIDER='${{ secrets.TF_PROVIDER }}'" \
+            -e "SSH_KEY_PUB='${{ secrets.SSH_KEY_PUB }}'" \
+            -e "SSH_KEY_PRIV='${{ secrets.SSH_KEY_PRIV }}'" \
+            -i tf_inventory.yml \
+            site.yml
