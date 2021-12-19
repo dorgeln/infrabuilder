@@ -92,9 +92,9 @@ jobs:
       - name: Debug Terraform state
         run: terraform -chdir=tf state pull
 
- 
       - name: Debug inventory
-        run: | 
+        run: |
+           ansible-doc -t inventory -l -j --playbook-dir .
            ansible-inventory -vvv --playbook-dir . -i tf_inventory.yml --list
 
       - name: Commit Terraform state
