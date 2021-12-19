@@ -1,4 +1,4 @@
 ---
 
-plugin: terraform 
+plugin: terraform-inventory 
 project_path: tf

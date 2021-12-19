@@ -4,7 +4,7 @@ from __future__ import (absolute_import, division, print_function)
 __metaclass__ = type
 
 DOCUMENTATION = r'''
-    name: terraform
+    name: terraform-inventory
     plugin_type: inventory
     short_description: Returns Ansible inventory from terraform
     description: Returns Ansible inventory from terraform
@@ -12,7 +12,7 @@ DOCUMENTATION = r'''
       plugin:
           description: Name of the plugin
           required: true
-          choices: ['terraform']
+          choices: ['terraform-inventory']
       project_path:
         description: Directory location of the terraform project
         required: true
