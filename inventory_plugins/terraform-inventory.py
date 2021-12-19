@@ -49,7 +49,7 @@ class InventoryModule(BaseInventoryPlugin):
         
         #subprocess.run("terraform state pull > tfstate.json",cwd=self.project_path, capture_output=False, shell=True, check=True)
 
-        tfstate_cmd=subprocess.Popen(['terraform','state','pull'],cwd=self.project_path,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+        tfstate_cmd=subprocess.Popen(['terraform','state','pull'],cwd=self.project_path,stdout=subprocess.PIPE)
         output, error = tfstate_cmd.communicate()
         if tfstate_cmd.returncode != 0:
             raise Exception("Terraforn state pull failed %d %s %s" % (process.returncode, output, error))
@@ -58,12 +58,18 @@ class InventoryModule(BaseInventoryPlugin):
         print(output)
 
         print('\n---\n Sanitized')
-        sanitized= output[(str(output).find('{')-2):str(output).rfind('}')]
+        #output = str(output).replace("\\n", "")
+        sanitized = output
+        start=str(output).find('{')-2
+        end=str(output).rfind('}')-2
+        sanitized= output[start:end]
+        
+        print(start,end)
         print(sanitized)
 
         tfstate=json.loads(sanitized)
 
-        print('---\n JSON')   
+        print('\n---\n JSON')   
         print (tfstate)
 
         for r in tfstate['resources']:
