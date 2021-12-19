@@ -1,0 +1,15 @@
+﻿- name: Install OVH tools
+  pip:
+    name:
+      - ovh==0.5.0
+
+- name: Create OVH config
+  template:
+    src: "{{ item }}"
+    dest: "{{ item }}"
+    mode: '0700'
+  with_items:
+    - ovhdns.py
+
+- name: Create DNS records
+  shell: ./ovhdns.py

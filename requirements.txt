@@ -1,7 +1,9 @@
 ansible==4.8.0
 ansible-core==2.11.6
 ovh==0.5.0
+certbot==1.22.0
 certbot-dns-ovh==1.22.0
+zope.interface==5.4.0
 
 
 

@@ -1,0 +1,4 @@
+﻿---
+- name: Run ovhdns
+  import_tasks: ovhdns.yml
+  tags: ovhdns

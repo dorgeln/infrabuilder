@@ -1,5 +1,24 @@
 ﻿- name: Install certbot tools
   pip:
     name:
-      - ovh
-      - certbot-dns-ovh
+      - ovh==0.5.0
+      - certbot==1.22.0
+      - certbot-dns-ovh==1.22.0
+      - certbot==1.22.0
+      - zope.interface==5.4.0
+
+- name: Create OVH config
+  template:
+    src: "{{ item }}"
+    dest: "{{ item }}"
+    mode: '0600'
+  with_items:
+    - ovh.ini
+
+- name: Create directory
+  file:
+    path: certs
+    state: directory
+
+- name: Create certs
+  shell: /home/ubuntu/.local/bin/certbot certonly --force-renewal --dns-ovh --non-interactive --agree-tos -m atrawog@gmail.com --dns-ovh-credentials ovh.ini -d micromamba-{{ TF_PROVIDER }}.mamba.pm -d {{inventory_hostname}}.mamba.pm  --work-dir certs --config-dir certs --logs-dir certs
