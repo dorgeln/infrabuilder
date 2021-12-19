@@ -107,4 +107,4 @@ jobs:
 
       - name: Deploy system
         run: |
-        ansible-playbook -i tf_inventory.yml site.yml
+          ansible-playbook -i tf_inventory.yml site.yml
