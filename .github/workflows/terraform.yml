@@ -95,7 +95,7 @@ jobs:
  
       - name: Debug inventory
         run: | 
-          ansible-inventory -i tf_inventory.yml -vvv --list
+           ansible-inventory -vvv --playbook-dir . -i tf_inventory.yml --list
 
       - name: Commit Terraform state
         run: |
