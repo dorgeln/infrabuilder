@@ -10,3 +10,9 @@
     - proxy
   roles:
     - certbot
+    - envoy
+
+- hosts:
+    - server
+  roles:
+    - microserver

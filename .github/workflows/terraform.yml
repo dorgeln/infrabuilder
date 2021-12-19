@@ -7,7 +7,7 @@ on:
   pull_request:
 
 jobs:
-  terraform:
+  deploy:
     name: "Terraform"
     runs-on: ubuntu-latest
     steps:
@@ -108,3 +108,4 @@ jobs:
       - name: Deploy system
         run: |
           ansible-playbook -i tf_inventory.yml site.yml
+

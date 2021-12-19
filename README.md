@@ -34,5 +34,5 @@ gh secret set ACTIONS_STEP_DEBUG --body "false"
 source .env;ansible-playbook -e "SSH_KEY_PUB='$SSH_KEY_PUB'" -e "SSH_KEY_PRIV='$SSH_KEY_PRIV'" -e "TF_PROVIDER='$TF_PROVIDER'" tf_config.yml
 source .env;ansible-playbook tf_apply.yml
 ansible-inventory --playbook-dir . -i tf_inventory.yml --list
-source .env;ansible-playbook -i tf_inventory.yml site.yml
+source .env;ansible-playbook -i tf_inventory.yml site.yml -e "SSH_KEY_PUB='$SSH_KEY_PUB'" -e "SSH_KEY_PRIV='$SSH_KEY_PRIV'" -e "TF_PROVIDER='$TF_PROVIDER'" 
 ```
