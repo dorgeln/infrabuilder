@@ -65,8 +65,6 @@ class InventoryModule(BaseInventoryPlugin):
         with open('tf/tfstate.json') as tfstate_json:
             tfstate=json.load(tfstate_json)
 
-        print(tfstate)
-
         for r in tfstate['resources']:
             if 'instances' in r:
                 for i in r['instances']:

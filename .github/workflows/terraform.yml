@@ -104,3 +104,7 @@ jobs:
           git add -A
           git diff-index --quiet HEAD || git commit -am `date "+%F-%H-%M-%S"`
           git push
+
+      - name: Deploy system
+        run: |
+        ansible-playbook -i tf_inventory.yml site.yml
