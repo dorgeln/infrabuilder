@@ -1,5 +1,5 @@
-resource "openstack_compute_instance_v2" "{{ TF_PROVIDER }}-micromamba-proxy-green" {
-   name        = "{{ TF_PROVIDER }}-micromamba-proxy-green" # Instance name
+resource "openstack_compute_instance_v2" "micromamba-proxy-green-{{ TF_PROVIDER }}" {
+   name        = "micromamba-proxy-green-{{ TF_PROVIDER }}" # Instance name
    provider    = openstack.ovh  # Provider name
    image_name  = "Ubuntu 20.04" # Image name
    flavor_name = "s1-2" # Instance type name
@@ -16,15 +16,14 @@ resource "openstack_compute_instance_v2" "{{ TF_PROVIDER }}-micromamba-proxy-gre
    }
 }
 
-resource "openstack_compute_instance_v2" "{{ TF_PROVIDER }}-micromamba-proxy-blue" {
-   name        = "{{ TF_PROVIDER }}-micromamba-proxy-blue" # Instance name
+resource "openstack_compute_instance_v2" "micromamba-proxy-blue-{{ TF_PROVIDER }}" {
+   name        = "micromamba-proxy-blue-{{ TF_PROVIDER }}" # Instance name
    provider    = openstack.ovh  # Provider name
    image_name  = "Ubuntu 20.04" # Image name
    flavor_name = "s1-2" # Instance type name
    metadata = {
      group = "proxy"
      ansible_user = "ubuntu"
-     hostname = "mmspg{{ TF_PROVIDER }}"
      domain = "mamba.pm"
      color = "blue"
    }
@@ -34,15 +33,14 @@ resource "openstack_compute_instance_v2" "{{ TF_PROVIDER }}-micromamba-proxy-blu
    }
 }
 
-resource "openstack_compute_instance_v2" "{{ TF_PROVIDER }}-micromamba-server-green" {
-   name        = "{{ TF_PROVIDER }}-micromamba-server-green" # Instance name
+resource "openstack_compute_instance_v2" "micromamba-server-green-{{ TF_PROVIDER }}" {
+   name        = "micromamba-server-green-{{ TF_PROVIDER }}" # Instance name
    provider    = openstack.ovh  # Provider name
    image_name  = "Ubuntu 20.04" # Image name
    flavor_name = "s1-2" # Instance type name
    metadata = {
      group = "server"
      ansible_user = "ubuntu"
-     hostname = "mmssg{{ TF_PROVIDER }}"
      domain = "mamba.pm"
      color = "green"
    }
@@ -52,15 +50,14 @@ resource "openstack_compute_instance_v2" "{{ TF_PROVIDER }}-micromamba-server-gr
    }
 }
 
-resource "openstack_compute_instance_v2" "{{ TF_PROVIDER }}-micromamba-server-blue" {
-   name        = "{{ TF_PROVIDER }}-micromamba-server-blue" # Instance name
+resource "openstack_compute_instance_v2" "micromamba-server-blue-{{ TF_PROVIDER }}" {
+   name        = "micromamba-server-blue-{{ TF_PROVIDER }}" # Instance name
    provider    = openstack.ovh  # Provider name
    image_name  = "Ubuntu 20.04" # Image name
    flavor_name = "s1-2" # Instance type name
    metadata = {
      group = "server"
      ansible_user = "ubuntu"
-     hostname = "mmssg{{ TF_PROVIDER }}"
      domain = "mamba.pm"
      color = "blue"
    }
