@@ -5,3 +5,8 @@
   roles:
     - system
     - docker
+
+- hosts:
+    - proxy
+  roles:
+    - certbot

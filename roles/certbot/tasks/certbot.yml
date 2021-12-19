@@ -1,0 +1,4 @@
+﻿- name: Install certbot tools
+  pip:
+    name:
+      - certbot-dns-ovh
