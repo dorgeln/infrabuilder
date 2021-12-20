@@ -135,7 +135,12 @@ static_resources:
         - endpoint:
             address:
               socket_address:
-                address: micromamba-server-green-{{ TF_PROVIDER }}.mamba.pm
+                address: micromamba-server-green-alpha-{{ TF_PROVIDER }}.mamba.pm
+                port_value: 80
+        - endpoint:
+            address:
+              socket_address:
+                address: micromamba-server-green-bravo-{{ TF_PROVIDER }}.mamba.pm
                 port_value: 80
   - name: blue
     type: STRICT_DNS
@@ -147,7 +152,12 @@ static_resources:
         - endpoint:
             address:
               socket_address:
-                address: micromamba-server-blue-{{ TF_PROVIDER }}.mamba.pm
+                address: micromamba-server-blue-alpha-{{ TF_PROVIDER }}.mamba.pm
+                port_value: 80
+        - endpoint:
+            address:
+              socket_address:
+                address: micromamba-server-blue-bravo-{{ TF_PROVIDER }}.mamba.pm
                 port_value: 80
 admin:
   address:

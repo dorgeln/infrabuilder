@@ -30,6 +30,9 @@
     name: "{{ansible_user}}"
     groups: docker
 
+- name: Reset connection
+  meta: reset_connection 
+
 - name: Install Python tools
   pip:
     name:

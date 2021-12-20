@@ -21,4 +21,5 @@
     state: directory
 
 - name: Create certs
-  shell: /home/ubuntu/.local/bin/certbot certonly --force-renewal --dns-ovh --non-interactive --agree-tos -m atrawog@gmail.com --dns-ovh-credentials ovh.ini -d micromamba-{{ TF_PROVIDER }}.mamba.pm -d {{inventory_hostname}}.mamba.pm  --work-dir certs --config-dir certs --logs-dir certs
+  shell: /home/ubuntu/.local/bin/certbot certonly --test-cert --dns-ovh --non-interactive --agree-tos -m atrawog@gmail.com --dns-ovh-credentials ovh.ini -d micromamba-{{ TF_PROVIDER }}.mamba.pm -d {{inventory_hostname}}.mamba.pm  --work-dir certs --config-dir certs --logs-dir certs
+  ignore_errors: yes
