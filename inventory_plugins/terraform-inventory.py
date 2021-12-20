@@ -50,18 +50,6 @@ class InventoryModule(BaseInventoryPlugin):
         
         subprocess.run("TF_INPUT=0  terraform state pull > tfstate.json 2> /dev/null",cwd=self.project_path, capture_output=False, shell=True, check=True)
 
-        with open('tf/tfstate.json', "r+") as f:
-            d = f.readlines()
-            f.seek(0)
-            for i in d:
-                if "state pull" in i :
-                    pass
-                elif "::debug" in i or "::set-output" in i:
-                    pass
-                else:
-                    f.write(i)
-            f.truncate()
-
         with open('tf/tfstate.json') as tfstate_json:
             tfstate=json.load(tfstate_json)
 
