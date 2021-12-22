@@ -8,7 +8,7 @@ on:
 
 jobs:
   deploy:
-    name: "Terraform"
+    name: "infrabuilder"
     runs-on: ubuntu-latest
     steps:
       - name: Checkout builder
@@ -20,6 +20,11 @@ jobs:
           repository: dorgeln/infrastate
           ssh-key: ${{ secrets.SSH_DEPLOY_KEY }}
           path: tf
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_wrapper: false
       
       - name: Setup Python
         uses: actions/setup-python@v2
