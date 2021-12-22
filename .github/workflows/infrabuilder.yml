@@ -59,6 +59,8 @@ jobs:
           OS_TENANT_ID: ${{ secrets.OS_TENANT_ID }}
           OS_TENANT_NAME: ${{ secrets.OS_TENANT_NAME }}
           OS_REGION_NAME: ${{ secrets.OS_REGION_NAME }}
+          OS_USERNAME: ${{ secrets.OS_USERNAME }}
+          OS_PASSWORD: ${{ secrets.OS_PASSWORD }}
           OVH_IMAGE: ${{ secrets.OVH_IMAGE }}
           OVH_FLAVOR: ${{ secrets.OVH_FLAVOR }}
           OVH_USER: ${{ secrets.OVH_USER }}
