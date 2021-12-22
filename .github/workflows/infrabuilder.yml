@@ -67,7 +67,7 @@ jobs:
           SSH_KEY_PRIV: ${{ secrets.SSH_KEY_PRIV }}
         continue-on-error: true
 
-      - name: Commit Terraform state
+      - name: Commit Terraform State
         run: |
           git config --global user.name 'infrabuilder'
           git config --global user.email 'infrabuilder@users.noreply.github.com'
@@ -77,5 +77,5 @@ jobs:
           git push
 
       - name: Ansible Deploy Status
-          if: steps.deploy.outcome == 'failure'
-          run: exit 1
+        if: steps.deploy.outcome == 'failure'
+        run: exit 1
