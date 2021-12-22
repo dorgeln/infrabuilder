@@ -39,6 +39,7 @@ jobs:
           ansible-galaxy install geerlingguy.docker 
 
       - name: Deploy system
+        id: deploy
         run: ansible-playbook site.yml
         env:
           TF_FQDN: ${{ secrets.TF_FQDN }}
@@ -64,6 +65,7 @@ jobs:
           OVH_INSTANCE: ${{ secrets.OVH_INSTANCE }}
           SSH_KEY_PUB: ${{ secrets.SSH_KEY_PUB }}
           SSH_KEY_PRIV: ${{ secrets.SSH_KEY_PRIV }}
+        continue-on-error: true
 
       - name: Commit Terraform state
         run: |
@@ -73,3 +75,7 @@ jobs:
           git add -A
           git diff-index --quiet HEAD || git commit -am `date "+%F-%H-%M-%S"`
           git push
+
+      - name: Ansible Deploy Status
+          if: steps.deploy.outcome == 'failure'
+          run: exit 1
