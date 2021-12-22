@@ -1,0 +1,77 @@
+name: "infrabuilder"
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+env:
+  TF_FQDN: ${{ secrets.TF_FQDN }}
+  TF_WORKSPACE: ${{ secrets.TF_WORKSPACE }}
+  TF_DOMAIN: ${{ secrets.TF_DOMAIN }}
+  TF_DEPLOYMENT: ${{ secrets.TF_DEPLOYMENT }}
+  TF_PROVIDER: ${{ secrets.TF_PROVIDER }}
+  OS_AUTH_URL: ${{ secrets.OS_AUTH_URL }}
+  OS_IDENTITY_API_VERSION: ${{ secrets.OS_IDENTITY_API_VERSION }}
+  OS_USER_DOMAIN_NAME: ${{ secrets.OS_USER_DOMAIN_NAME }}
+  OS_PROJECT_DOMAIN_NAME: ${{ secrets.OS_PROJECT_DOMAIN_NAME }}
+  OS_TENANT_ID: ${{ secrets.OS_TENANT_ID }}
+  OS_TENANT_NAME: ${{ secrets.OS_TENANT_NAME }}
+  OS_REGION_NAME: ${{ secrets.OS_REGION_NAME }}
+  OVH_IMAGE: ${{ secrets.OVH_IMAGE }}
+  OVH_FLAVOR: ${{ secrets.OVH_FLAVOR }}
+  OVH_USER: ${{ secrets.OVH_USER }}
+  OVH_ENDPOINT: ${{ secrets.OVH_ENDPOINT }}
+  OVH_APP_KEY: ${{ secrets.OVH_APP_KEY }}
+  OVH_APP_SECRET: ${{ secrets.OVH_APP_SECRET }}
+  OVH_CONSUMER_KEY: ${{ secrets.OVH_CONSUMER_KEY }}
+  OVH_PROJECT: ${{ secrets.OVH_PROJECT }}
+  OVH_INSTANCE: ${{ secrets.OVH_INSTANCE }}
+  SSH_KEY_PUB: ${{ secrets.SSH_KEY_PUB }}
+  SSH_KEY_PRIV: ${{ secrets.SSH_KEY_PRIV }}
+
+jobs:
+  deploy:
+    name: "Terraform"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout builder
+        uses: actions/checkout@v2
+    
+      - name: Checkout state
+        uses: actions/checkout@v2
+        with:
+          repository: dorgeln/infrastate
+          ssh-key: ${{ secrets.SSH_DEPLOY_KEY }}
+          path: tf
+      
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+          cache: 'pip'
+          
+      - name: Install Python dependencies
+        run: pip install -r requirements.txt
+        
+      - name: Ansible Galaxy
+        id: galaxy
+        run: |
+          ansible-galaxy collection install community.general
+          ansible-galaxy collection install git+https://github.com/dorgeln/infra-ovh-ansible-module
+          ansible-galaxy install maresb.micromamba
+          ansible-galaxy install geerlingguy.docker 
+
+      - name: Deploy system
+        run: |
+          ansible-playbook site.yml
+
+      - name: Commit Terraform state
+        run: |
+          git config --global user.name 'infrabuilder'
+          git config --global user.email 'infrabuilder@users.noreply.github.com'
+          pushd tf
+          git add -A
+          git diff-index --quiet HEAD || git commit -am `date "+%F-%H-%M-%S"`
+          git push

@@ -3,27 +3,49 @@
 import ovh
 import json
 
-domain='mamba.pm'
-project="{{ OVH_PROJECT }}"
-instance="{{ OVH_INSTANCE }}"
+domain='{{lookup('env','TF_DOMAIN')}}'
+project="{{lookup('env','OVH_PROJECT')}}"
+instance="{{lookup('env','OVH_INSTANCE')}}"
 
 client = ovh.Client(
-    endpoint="{{ OVH_ENDPOINT }}",
-    application_key="{{ OVH_APP_KEY }}",
-    application_secret="{{ OVH_APP_SECRET }}",
-    consumer_key="{{ OVH_CONSUMER_KEY }}",
+    endpoint="{{lookup('env','OVH_ENDPOINT')}}",
+    application_key="{{lookup('env','OVH_APP_KEY')}}",
+    application_secret="{{lookup('env','OVH_APP_SECRET')}}",
+    consumer_key="{{lookup('env','OVH_CONSUMER_KEY')}}",
 )
 
 endpoint=f'/domain/zone/{domain}/record'
+
+{% for h in groups['proxy'] %}
 result = client.post( endpoint,
     fieldType='A',
-    subDomain='{{inventory_hostname}}.mamba.pm.', 
-    target="{{ansible_host}}", 
+    subDomain='{{lookup('env','TF_FQDN')}}.', 
+    target="{{hostvars[h].ansible_host}}", 
     ttl=None,
 )
 print (f"POST {endpoint}",json.dumps(result, indent=4))
 
+result = client.post( endpoint,
+    fieldType='A',
+    subDomain='{{hostvars[h].inventory_hostname}}.{{lookup('env','TF_DOMAIN')}}.', 
+    target="{{hostvars[h].ansible_host}}", 
+    ttl=None,
+)
+print (f"POST {endpoint}",json.dumps(result, indent=4))
+{% endfor %}
+
+{% for h in groups['server'] %}
+result = client.post( endpoint,
+    fieldType='A',
+    subDomain='{{hostvars[h].inventory_hostname}}.{{lookup('env','TF_DOMAIN')}}.', 
+    target="{{hostvars[h].ansible_host}}", 
+    ttl=None,
+)
+print (f"POST {endpoint}",json.dumps(result, indent=4))
+{% endfor %}
+
+
 endpoint=f'/domain/zone/{domain}/refresh'
 result = client.post(endpoint)
-print (f"POST {endpoint}",json.dumps(result, indent=4))
+print (f"POST {endpoint}")
  

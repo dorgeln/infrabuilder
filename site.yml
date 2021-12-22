@@ -4,6 +4,8 @@
   roles:
   - secrets
   - terraform
+  - ovhdns
+  - certbot
   gather_facts: no
 
 - hosts: 
@@ -18,12 +20,11 @@
   roles:
     - system
     - docker
-#    - ovhdns
+
 
 - hosts:
     - proxy
   roles:
-    #- certbot
     - envoy
 
 - hosts:

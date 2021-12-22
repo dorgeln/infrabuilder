@@ -1,4 +1,14 @@
-﻿- name: Create envoy config
+﻿- name: Copy Certs
+  copy:
+    src: "{{certs}}/live/{{fqdn}}/{{item}}"
+    dest: "{{item}}"
+    mode: '0600'
+  with_items:
+    - fullchain.pem
+    - privkey.pem
+
+
+- name: Create envoy config
   template:
     src: "{{ item }}"
     dest: "{{ item }}"

@@ -1,15 +1,8 @@
-﻿- name: Install OVH tools
-  pip:
-    name:
-      - ovh==0.5.0
-
-- name: Create OVH config
+﻿- name: Create DNS update
   template:
-    src: "{{ item }}"
-    dest: "{{ item }}"
+    src: "ovhdns.py"
+    dest: ".secrets/ovhdns.py"
     mode: '0700'
-  with_items:
-    - ovhdns.py
 
-- name: Create DNS records
-  shell: ./ovhdns.py
+- name: Update DNS records
+  shell: .secrets/ovhdns.py
