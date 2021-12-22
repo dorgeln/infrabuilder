@@ -6,6 +6,17 @@ on:
       - main
   pull_request:
 
+env:
+  OS_AUTH_URL: ${{ secrets.OS_AUTH_URL }}
+  OS_IDENTITY_API_VERSION: ${{ secrets.OS_IDENTITY_API_VERSION }}
+  OS_USER_DOMAIN_NAME: ${{ secrets.OS_USER_DOMAIN_NAME }}
+  OS_PROJECT_DOMAIN_NAME: ${{ secrets.OS_PROJECT_DOMAIN_NAME }}
+  OS_TENANT_ID: ${{ secrets.OS_TENANT_ID }}
+  OS_TENANT_NAME: ${{ secrets.OS_TENANT_NAME }}
+  OS_USERNAME: ${{ secrets.OS_USERNAME }}
+  OS_PASSWORD: ${{ secrets.OS_PASSWORD }}
+  OS_REGION_NAME: ${{ secrets.OS_REGION_NAME }}
+
 jobs:
   deploy:
     name: "Terraform"
@@ -80,31 +91,6 @@ jobs:
 
       - name: Terraform Apply
         run: terraform -chdir=tf apply -auto-approve
-        env:
-          OS_AUTH_URL: ${{ secrets.OS_AUTH_URL }}
-          OS_IDENTITY_API_VERSION: ${{ secrets.OS_IDENTITY_API_VERSION }}
-          OS_USER_DOMAIN_NAME: ${{ secrets.OS_USER_DOMAIN_NAME }}
-          OS_PROJECT_DOMAIN_NAME: ${{ secrets.OS_PROJECT_DOMAIN_NAME }}
-          OS_TENANT_ID: ${{ secrets.OS_TENANT_ID }}
-          OS_TENANT_NAME: ${{ secrets.OS_TENANT_NAME }}
-          OS_USERNAME: ${{ secrets.OS_USERNAME }}
-          OS_PASSWORD: ${{ secrets.OS_PASSWORD }}
-          OS_REGION_NAME: ${{ secrets.OS_REGION_NAME }}
-
-
-      - name: Deploy system
-        run: |
-          ansible-playbook \
-            -e "TF_PROVIDER='${{ secrets.TF_PROVIDER }}'" \
-            -e "SSH_KEY_PUB='${{ secrets.SSH_KEY_PUB }}'" \
-            -e "SSH_KEY_PRIV='${{ secrets.SSH_KEY_PRIV }}'" \
-            -e "OVH_ENDPOINT='${{ secrets.OVH_ENDPOINT}}'" \
-            -e "OVH_APP_KEY='${{ secrets.OVH_APP_KEY}}'" \
-            -e "OVH_APP_SECRET='${{ secrets.OVH_APP_SECRET}}'" \
-            -e "OVH_CONSUMER_KEY='${{ secrets.OVH_CONSUMER_KEY}}'" \
-            -e "OVH_PROJECT='${{ secrets.OVH_PROJECT}}'" \
-            -e "OVH_INSTANCE='${{ secrets.OVH_INSTANCE}}'" \
-            tf_apply.yml
         env:
           OS_AUTH_URL: ${{ secrets.OS_AUTH_URL }}
           OS_IDENTITY_API_VERSION: ${{ secrets.OS_IDENTITY_API_VERSION }}

@@ -39,12 +39,17 @@ gh secret set ACTIONS_STEP_DEBUG --body "false"
 ### Run localy 
 
 ```
-source .env;ansible-playbook -e "SSH_KEY_PUB='$SSH_KEY_PUB'" -e "SSH_KEY_PRIV='$SSH_KEY_PRIV'" -e "TF_PROVIDER='$TF_PROVIDER'" tf_config.yml
+source .env;ansible-playbook -e "SSH_KEY_PUB='$SSH_KEY_PUB'" -e "SSH_KEY_PRIV='$SSH_KEY_PRIV'" -e "WORKSPACE='$TF_WORKSPACE'" tf_config.yml
 source .env;ansible-playbook tf_apply.yml
 ansible-inventory --playbook-dir . -i tf_inventory.yml --list
-source .env;ansible-playbook -i tf_inventory.yml site.yml \
-    -e "TF_PROVIDER='$TF_PROVIDER'" -e "OVH_ENDPOINT='$OVH_ENDPOINT'" \
+source .env;ansible-playbook site.yml \
+    -e "SSH_KEY_PUB='$SSH_KEY_PUB'" -e "SSH_KEY_PRIV='$SSH_KEY_PRIV'" \
+    -e "TF_DEPLOYMENT='$TF_DEPLOYMENT'" -e "TF_WORKSPACE='$TF_WORKSPACE'" \
+    -e "TF_DOMAIN='$TF_DOMAIN'" \
+    -e "OVH_ENDPOINT='$OVH_ENDPOINT'" \
     -e "OVH_APP_KEY='$OVH_APP_KEY'" -e "OVH_APP_SECRET='$OVH_APP_SECRET'" \
     -e "OVH_CONSUMER_KEY='$OVH_CONSUMER_KEY'" -e "OVH_PROJECT='$OVH_PROJECT'" \
-    -e "OVH_INSTANCE='$OVH_INSTANCE'" 
+    -e "OVH_INSTANCE='$OVH_INSTANCE'" -t terraform
+
+source .env;ansible-playbook site.yml -t terraform
 ```

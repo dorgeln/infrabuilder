@@ -14,9 +14,6 @@ DOCUMENTATION = r'''
           description: Name of the plugin
           required: true
           choices: ['terraform-inventory']
-      project_path:
-        description: Directory location of the terraform project
-        required: true
 '''
 
 from ansible.plugins.inventory import BaseInventoryPlugin
@@ -31,10 +28,10 @@ class InventoryModule(BaseInventoryPlugin):
 
     def verify_file(self,path):
         '''Return true/false if this is possibly a valid file for this plugin to consume'''
-        #valid=False
-        #if super(InventoryModule, self).verify_file(path):
-        #    valid=True
-        return True
+        valid=False
+        if super(InventoryModule, self).verify_file(path):
+            valid=True
+        return valid
 
     
     def parse(self, inventory, loader, path, cache):
@@ -43,15 +40,14 @@ class InventoryModule(BaseInventoryPlugin):
         self._read_config_data(path)
         try:
             self.plugin = self.get_option('plugin')
-            self.project_path = self.get_option('project_path')
         except Exception as e:
             raise AnsibleParserError(
                 'All correct options required: {}'.format(e))
         
-        subprocess.run("TF_INPUT=0  terraform state pull > tfstate.json 2> /dev/null",cwd=self.project_path, capture_output=False, shell=True, check=True)
-
-        with open('tf/tfstate.json') as tfstate_json:
-            tfstate=json.load(tfstate_json)
+        tfstate_dir=os.path.join('tf',os.getenv('TF_DEPLOYMENT'),os.getenv('TF_WORKSPACE'))
+        tfstate_cmd=subprocess.run(" terraform state pull",cwd=tfstate_dir, capture_output=True, shell=True, check=True, text=True)
+        tfstate=json.loads(tfstate_cmd.stdout)
+            
 
         for r in tfstate['resources']:
             if 'instances' in r:

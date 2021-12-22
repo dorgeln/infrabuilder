@@ -4,7 +4,6 @@ services:
   front-envoy:
     build:
       context: .
-      dockerfile: Dockerfile-frontenvoy
     networks:
     - envoymesh
     ports:

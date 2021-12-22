@@ -5,8 +5,8 @@
     mode: '0600'
   with_items:
     - docker-compose.yaml
-    - Dockerfile
-    - envoy.yaml
+    - Dockerfile-frontenvoy
+    - front-envoy.yaml
 
 - name: Start envoy
   shell: /home/ubuntu/.local/bin/docker-compose up --build -d

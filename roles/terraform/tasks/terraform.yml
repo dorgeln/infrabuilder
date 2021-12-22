@@ -1,0 +1,29 @@
+﻿- name: Create terraform directory
+  file:
+    path: "tf/{{lookup('env','TF_DEPLOYMENT')}}/{{lookup('env','TF_WORKSPACE')}}"
+    state: directory
+
+
+- name: Create Terraform config
+  template:
+    src: "{{item}}"
+    dest: "tf/{{lookup('env','TF_DEPLOYMENT')}}/{{lookup('env','TF_WORKSPACE')}}/{{item}}"
+    mode: '0600'
+  with_items:
+    - terraform.tf
+    - id_rsa.pub
+    - provider.tf
+    - ssh.tf
+    - terraform.tf
+    - instances.tf
+
+- name: Deploy instances
+  community.general.terraform:
+    project_path: "tf/{{lookup('env','TF_DEPLOYMENT')}}/{{lookup('env','TF_WORKSPACE')}}"
+    state: present
+    force_init: true
+    workspace: "{{lookup('env','TF_WORKSPACE')}}"
+
+- name: Refresh inventory
+  meta: refresh_inventory
+

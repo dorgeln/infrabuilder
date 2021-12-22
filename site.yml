@@ -1,16 +1,29 @@
 ---
 - hosts:
+  - localhost
+  roles:
+  - secrets
+  - terraform
+  gather_facts: no
+
+- hosts: 
+  - all
+  roles:
+  - wait
+  gather_facts: no
+
+- hosts:
     - proxy
     - server
   roles:
     - system
     - docker
-    - ovhdns
+#    - ovhdns
 
 - hosts:
     - proxy
   roles:
-    - certbot
+    #- certbot
     - envoy
 
 - hosts:
