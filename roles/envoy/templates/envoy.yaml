@@ -24,7 +24,7 @@ static_resources:
                   cluster: green
                   prefix_rewrite: "/"
               - match:
-                  prefix: "/blue"
+                  prefix: "/blue/"
                 route:
                   cluster: blue
                   prefix_rewrite: "/"
@@ -59,7 +59,7 @@ static_resources:
                   cluster: green
                   prefix_rewrite: "/"
               - match:
-                  prefix: "/blue"
+                  prefix: "/blue/"
                 route:
                   cluster: blue
                   prefix_rewrite: "/"
