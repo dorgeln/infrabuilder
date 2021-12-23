@@ -54,6 +54,16 @@ static_resources:
               - "*"
               routes:
               - match:
+                  prefix: "/green/"
+                route:
+                  cluster: green
+                  prefix_rewrite: "/"
+              - match:
+                  prefix: "/blue"
+                route:
+                  cluster: blue
+                  prefix_rewrite: "/"
+              - match:
                   prefix: "/"
                 route:
                   cluster: green

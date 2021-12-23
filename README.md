@@ -9,8 +9,11 @@ Your existing openstack configuration can be imported into github secrects using
 source .env
 
 gh secret set TF_FQDN --body "mm.mamba.pm"
+gh secret set CERT_STAGING --body "False"
 gh secret set TF_WORKSPACE --body "prod"
 gh secret set OVH_FLAVOR --body "d2-8"
+
+gh secret set TF_DOMAIN --body "$TF_DOMAIN"
 
 gh secret set TF_DOMAIN --body "$TF_DOMAIN"
 gh secret set TF_DEPLOYMENT --body "$TF_DEPLOYMENT"

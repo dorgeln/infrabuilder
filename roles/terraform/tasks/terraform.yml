@@ -24,12 +24,6 @@
     force_init: true
     workspace: "{{tf_workspace}}"
 
-# - name: Init Terraform
-#   shell: terraform -chdir={{tf_dir}} init
-
-# - name: Apply Terraform
-#   shell: terraform -chdir={{tf_dir}} init
-
 - name: Refresh inventory
   meta: refresh_inventory
 

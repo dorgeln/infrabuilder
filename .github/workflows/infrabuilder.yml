@@ -47,6 +47,7 @@ jobs:
         id: deploy
         run: ansible-playbook site.yml
         env:
+          CERT_STAGING: ${{ secrets.CERT_STAGING }}
           TF_FQDN: ${{ secrets.TF_FQDN }}
           TF_WORKSPACE: ${{ secrets.TF_WORKSPACE }}
           TF_DOMAIN: ${{ secrets.TF_DOMAIN }}
