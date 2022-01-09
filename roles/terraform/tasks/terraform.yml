@@ -134,3 +134,8 @@
 - name: Refresh inventory
   meta: refresh_inventory
 
+- name: Show all hosts in inventory
+  ansible.builtin.debug:
+    msg: "{{ item }}"
+  loop: "{{ query('inventory_hostnames', 'all') }}"
+

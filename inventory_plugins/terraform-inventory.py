@@ -45,7 +45,8 @@ class InventoryModule(BaseInventoryPlugin):
                 'All correct options required: {}'.format(e))
         
         tfstate_dir=os.path.join('tf',os.getenv('DEPLOYMENT'),os.getenv('WORKSPACE'))
-        tfstate_cmd=subprocess.run(" terraform state pull",cwd=tfstate_dir, capture_output=True, shell=True, check=True, text=True)
+        tfworkspace_cmd=subprocess.run(f"terraform workspace select %s"%os.getenv('WORKSPACE'),cwd=tfstate_dir, capture_output=True, shell=True, check=True, text=True)
+        tfstate_cmd=subprocess.run("terraform state pull",cwd=tfstate_dir, capture_output=True, shell=True, check=True, text=True)
         tfstate=json.loads(tfstate_cmd.stdout)
            
         for r in tfstate['resources']:
@@ -68,15 +69,3 @@ class InventoryModule(BaseInventoryPlugin):
 
                                 for metadata in a['all_metadata']:
                                     self.inventory.set_variable(host, metadata , a['all_metadata'][metadata])
-
-
-    
-                                
-
-
-
-   
-
-
-
-
