@@ -47,32 +47,54 @@ jobs:
         id: deploy
         run: ansible-playbook site.yml
         env:
-          CERT_STAGING: ${{ secrets.CERT_STAGING }}
-          TF_FQDN: ${{ secrets.TF_FQDN }}
-          TF_WORKSPACE: ${{ secrets.TF_WORKSPACE }}
-          TF_DOMAIN: ${{ secrets.TF_DOMAIN }}
-          TF_DEPLOYMENT: ${{ secrets.TF_DEPLOYMENT }}
-          TF_PROVIDER: ${{ secrets.TF_PROVIDER }}
-          OS_AUTH_URL: ${{ secrets.OS_AUTH_URL }}
-          OS_IDENTITY_API_VERSION: ${{ secrets.OS_IDENTITY_API_VERSION }}
-          OS_USER_DOMAIN_NAME: ${{ secrets.OS_USER_DOMAIN_NAME }}
-          OS_PROJECT_DOMAIN_NAME: ${{ secrets.OS_PROJECT_DOMAIN_NAME }}
-          OS_TENANT_ID: ${{ secrets.OS_TENANT_ID }}
-          OS_TENANT_NAME: ${{ secrets.OS_TENANT_NAME }}
-          OS_REGION_NAME: ${{ secrets.OS_REGION_NAME }}
-          OS_USERNAME: ${{ secrets.OS_USERNAME }}
-          OS_PASSWORD: ${{ secrets.OS_PASSWORD }}
-          OVH_IMAGE: ${{ secrets.OVH_IMAGE }}
-          OVH_FLAVOR: ${{ secrets.OVH_FLAVOR }}
-          OVH_USER: ${{ secrets.OVH_USER }}
-          OVH_ENDPOINT: ${{ secrets.OVH_ENDPOINT }}
-          OVH_APP_KEY: ${{ secrets.OVH_APP_KEY }}
-          OVH_APP_SECRET: ${{ secrets.OVH_APP_SECRET }}
-          OVH_CONSUMER_KEY: ${{ secrets.OVH_CONSUMER_KEY }}
-          OVH_PROJECT: ${{ secrets.OVH_PROJECT }}
-          OVH_INSTANCE: ${{ secrets.OVH_INSTANCE }}
-          SSH_KEY_PUB: ${{ secrets.SSH_KEY_PUB }}
-          SSH_KEY_PRIV: ${{ secrets.SSH_KEY_PRIV }}
+          DEPLOYMENT: ${{secrets.DEPLOYMENT}}
+          WORKSPACE: ${{secrets.WORKSPACE}}
+          ACTIVE: ${{secrets.ACTIVE}}
+          DOMAIN: ${{secrets.DOMAIN}}
+          PROVIDER: ${{secrets.PROVIDER}}
+          USER: ${{secrets.USER}}
+          EMAIL: ${{secrets.EMAIL}}
+          STAGING: ${{secrets.STAGING}}
+          GMM_HOSTNAME: ${{secrets.GMM_HOSTNAME}}
+          GMM_HOSTNAME_GREEN: ${{secrets.GMM_HOSTNAME_GREEN}}
+          GMM_HOSTNAME_BLUE: ${{secrets.GMM_HOSTNAME_BLUE}}
+          GMM_PROXY_GREEN_REGIONS: ${{secrets.GMM_PROXY_GREEN_REGIONS}}
+          GMM_PROXY_GREEN_IMAGE: ${{secrets.GMM_PROXY_GREEN_IMAGE}}
+          GMM_PROXY_GREEN_FLAVOR: ${{secrets.GMM_PROXY_GREEN_FLAVOR}}
+          GMM_BACKEND_GREEN_REGIONS: ${{secrets.GMM_BACKEND_GREEN_REGIONS}}
+          GMM_BACKEND_GREEN_IMAGE: ${{secrets.GMM_BACKEND_GREEN_IMAGE}}
+          GMM_BACKEND_GREEN_FLAVOR: ${{secrets.GMM_BACKEND_GREEN_FLAVOR}}
+          GMM_PROXY_BLUE_REGIONS: ${{secrets.GMM_PROXY_BLUE_REGIONS}}
+          GMM_PROXY_BLUE_IMAGE: ${{secrets.GMM_PROXY_BLUE_IMAGE}}
+          GMM_PROXY_BLUE_FLAVOR: ${{secrets.GMM_PROXY_BLUE_FLAVOR}}
+          GMM_BACKEND_BLUE_REGIONS: ${{secrets.GMM_BACKEND_BLUE_REGIONS}}
+          GMM_BACKEND_BLUE_IMAGE: ${{secrets.GMM_BACKEND_BLUE_IMAGE}}
+          GMM_BACKEND_BLUE_FLAVOR: ${{secrets.GMM_BACKEND_BLUE_FLAVOR}}
+          CMK_HOSTNAME: ${{secrets.CMK_HOSTNAME}}
+          CMK_HOSTNAME_GREEN: ${{secrets.CMK_HOSTNAME_GREEN}}
+          CMK_HOSTNAME_BLUE: ${{secrets.CMK_HOSTNAME_BLUE}}
+          CMK_PASSWORD: ${{secrets.CMK_PASSWORD}}
+          CMK_SECRET: ${{secrets.CMK_SECRET}}
+          CMK_GREEN_REGIONS: ${{secrets.CMK_GREEN_REGIONS}}
+          CMK_GREEN_IMAGE: ${{secrets.CMK_GREEN_IMAGE}}
+          CMK_GREEN_FLAVOR: ${{secrets.CMK_GREEN_FLAVOR}}
+          CMK_BLUE_REGIONS: ${{secrets.CMK_BLUE_REGIONS}}
+          CMK_BLUE_IMAGE: ${{secrets.CMK_BLUE_IMAGE}}
+          CMK_BLUE_FLAVOR: ${{secrets.CMK_BLUE_FLAVOR}}
+          TF_VAR_endpoint: ${{secrets.TF_VAR_endpoint}}
+          TF_VAR_application_key: ${{secrets.TF_VAR_application_key}}
+          TF_VAR_application_secret: ${{secrets.TF_VAR_application_secret}}
+          TF_VAR_consumer_key: ${{secrets.TF_VAR_consumer_key}}
+          TF_VAR_project: ${{secrets.TF_VAR_project}}
+          TF_VAR_instance: ${{secrets.TF_VAR_instance}}
+          TF_VAR_auth_url: ${{secrets.TF_VAR_auth_url}}
+          TF_VAR_user_name: ${{secrets.TF_VAR_user_name}}
+          TF_VAR_password: ${{secrets.TF_VAR_password}}
+          TF_VAR_user_domain_name: ${{secrets.TF_VAR_user_domain_name}}
+          TF_VAR_tenant_name: ${{secrets.TF_VAR_tenant_name}}
+          TF_VAR_tenant_id: ${{secrets.TF_VAR_tenant_id}}
+          SSH_KEY_PUB: ${{secrets.SSH_KEY_PUB}}
+          SSH_KEY_PRIV: ${{secrets.SSH_KEY_PRIV}}
         continue-on-error: true
 
       - name: Commit Terraform State

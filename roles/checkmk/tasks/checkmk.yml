@@ -1,0 +1,33 @@
+- name: Install checkmk
+  become: yes
+  apt:
+    deb: https://download.checkmk.com/checkmk/2.0.0p17/check-mk-raw-2.0.0p17_0.focal_amd64.deb
+    state: present
+
+- name: Check site status
+  become: yes
+  shell: omd status mon
+  register: status_mon
+  ignore_errors: yes
+
+- name: Create site
+  become: yes
+  shell: omd create mon
+  when: status_mon.rc == 1
+
+- name: Set cmkadmin password
+  become: yes
+  shell: htpasswd -cb /opt/omd/sites/mon/etc/htpasswd cmkadmin {{cmk_password}}
+
+- name: Set automation secret
+  become: yes
+  copy: 
+    content="{{cmk_secret}}" 
+    dest=/opt/omd/sites/mon/var/check_mk/web/automation/automation.secret
+
+- name: Start site
+  become: yes
+  shell: omd start mon
+  when: status_mon.rc == 1
+
+

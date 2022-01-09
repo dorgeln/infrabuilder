@@ -1,28 +1,135 @@
 ﻿- name: Create terraform directory
   file:
-    path: "{{tf_dir}}"
+    path: "{{tf}}"
     state: directory
 
+- name: Find existing terraform config
+  find:
+    paths: "{{tf}}"
+    patterns: "*.tf"
+  register: tfconfig
+
+- name: Cleanup existing terraform config
+  file:
+    path: "{{item.path}}"
+    state: absent
+  loop: "{{tfconfig.files}}"
+
+- name: Create Terraform provider
+  template:
+    src: "provider_ovh.tf"
+    dest: "{{tf}}/provider.tf"
+    mode: '0600'
 
 - name: Create Terraform config
   template:
     src: "{{item}}"
-    dest: "{{tf_dir}}/{{item}}"
+    dest: "{{tf}}/{{item}}"
     mode: '0600'
-  with_items:
+  loop:
     - terraform.tf
     - id_rsa.pub
-    - provider.tf
-    - ssh.tf
-    - terraform.tf
-    - instances.tf
+
+- name: Create Terraform SSH config
+  template:
+    src: "ssh.tf"
+    dest: "{{tf}}/ssh_{{region|lower}}.tf"
+    mode: '0600'
+  vars:
+    - region: "{{item}}"
+    - provider: "openstack"
+  loop: "{{regions}}"
+
+
+- name: Create Terraform DNS provider
+  template:
+    src: "domain_ovh.tf"
+    dest: "{{tf}}/domain.tf"
+    mode: '0600'
+
+
+- name: Create Terraform green proxy config
+  template:
+    src: "instance.tf"
+    dest: "{{tf}}/{{deployment}}-{{workspace}}-{{color}}-{{id}}-{{region|lower}}.tf"
+    mode: '0600'
+  vars:
+    - color: "green"
+    - id: "proxy"
+    - image: "{{gmm_proxy_green_image}}"
+    - flavour: "{{gmm_proxy_green_flavour}}"
+    - region: "{{item}}"
+    - provider: "openstack"
+  loop: "{{gmm_proxy_green_regions}}"
+
+- name: Create Terraform green backend config
+  template:
+    src: "instance.tf"
+    dest: "{{tf}}/{{deployment}}-{{workspace}}-{{color}}-{{id}}-{{region|lower}}.tf"
+    mode: '0600'
+  vars:
+    - color: "green"
+    - id: "backend"
+    - image: "{{gmm_backend_green_image}}"
+    - flavour: "{{gmm_backend_green_flavour}}"
+    - region: "{{item}}"
+    - provider: "openstack"
+  loop: "{{gmm_backend_green_regions}}"
+
+- name: Create Terraform blue proxy config
+  template:
+    src: "instance.tf"
+    dest: "{{tf}}/{{deployment}}-{{workspace}}-{{color}}-{{id}}-{{region|lower}}.tf"
+    mode: '0600'
+  vars:
+    - color: "blue"
+    - id: "proxy"
+    - image: "{{gmm_proxy_blue_image}}"
+    - flavour: "{{gmm_proxy_blue_flavour}}"
+    - region: "{{item}}"
+    - provider: "openstack"
+  loop: "{{gmm_proxy_blue_regions}}"
+
+- name: Create Terraform blue backend config
+  template:
+    src: "instance.tf"
+    dest: "{{tf}}/{{deployment}}-{{workspace}}-{{color}}-{{id}}-{{region|lower}}.tf"
+    mode: '0600'
+  vars:
+    - color: "blue"
+    - id: "backend"
+    - image: "{{gmm_backend_blue_image}}"
+    - flavour: "{{gmm_backend_blue_flavour}}"
+    - region: "{{item}}"
+    - provider: "openstack"
+  loop: "{{gmm_backend_blue_regions}}"
+
+- name: Create Terraform green cmk config
+  template:
+    src: "instance.tf"
+    dest: "{{tf}}/{{deployment}}-{{workspace}}-{{color}}-{{id}}-{{region|lower}}.tf"
+    mode: '0600'
+  vars:
+    - color: "green"
+    - id: "cmk"
+    - image: "{{cmk_green_image}}"
+    - flavour: "{{cmk_green_flavour}}"
+    - region: "{{item}}"
+    - provider: "openstack"
+  loop: "{{cmk_green_regions}}"
+
+#    - ssh.tf
+#    - instances.tf
 
 - name: Deploy instances
   community.general.terraform:
-    project_path: "{{tf_dir}}"
+    project_path: "{{tf}}"
     state: present
     force_init: true
-    workspace: "{{tf_workspace}}"
+    workspace: "{{workspace}}"
+    variables: {
+      'endpoint':endpoint
+    }
 
 - name: Refresh inventory
   meta: refresh_inventory

@@ -1,0 +1,4 @@
+---
+- name: checkmkaddhosts
+  import_tasks: checkmkaddhosts.yml
+  tags: checkmkaddhosts

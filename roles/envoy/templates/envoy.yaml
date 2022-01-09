@@ -89,16 +89,14 @@ static_resources:
       cluster_name: green
       endpoints:
       - lb_endpoints:
+{% for h in groups[deployment+'-backend-green'] %}
         - endpoint:
             address:
               socket_address:
-                address: {{lookup('env','TF_DEPLOYMENT')}}-{{lookup('env','TF_WORKSPACE')}}-server-green-alpha.{{lookup('env','TF_DOMAIN')}}
+                address: {{hostvars[h].ansible_host}}
                 port_value: 80
-        - endpoint:
-            address:
-              socket_address:
-                address: {{lookup('env','TF_DEPLOYMENT')}}-{{lookup('env','TF_WORKSPACE')}}-server-green-bravo.{{lookup('env','TF_DOMAIN')}}
-                port_value: 80
+{% endfor %}
+
   - name: blue
     type: STRICT_DNS
     lb_policy: ROUND_ROBIN
@@ -106,16 +104,14 @@ static_resources:
       cluster_name: blue
       endpoints:
       - lb_endpoints:
+{% for h in groups[deployment+'-backend-blue'] %}
         - endpoint:
             address:
               socket_address:
-                address: {{lookup('env','TF_DEPLOYMENT')}}-{{lookup('env','TF_WORKSPACE')}}-server-blue-alpha.{{lookup('env','TF_DOMAIN')}}
+                address: {{hostvars[h].ansible_host}}
                 port_value: 80
-        - endpoint:
-            address:
-              socket_address:
-                address: {{lookup('env','TF_DEPLOYMENT')}}-{{lookup('env','TF_WORKSPACE')}}-server-blue-bravo.{{lookup('env','TF_DOMAIN')}}
-                port_value: 80
+{% endfor %}
+
 admin:
   address:
     socket_address:

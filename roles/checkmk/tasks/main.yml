@@ -1,0 +1,4 @@
+---
+- name: Install checkmk
+  import_tasks: checkmk.yml
+  tags: checkmk

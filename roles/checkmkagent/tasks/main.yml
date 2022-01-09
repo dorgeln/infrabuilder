@@ -1,0 +1,4 @@
+---
+- name: Install checkmkagent
+  import_tasks: checkmkagent.yml
+  tags: checkmkagent
