@@ -60,8 +60,7 @@ gh secret set SSH_KEY_PRIV --body "$SSH_KEY_PRIV"
 ```
 
 Set SSH_DEPLOY_KEY for state repository.
-
-git submodule add git@github.com:dorgeln/infrastate.git tf
+gh secret set SSH_DEPLOY_KEY --body "$SSH_DEPLOY_KEY"
 
 ### Debugging
 

@@ -4,5 +4,8 @@
 # ENV
 .env
 
+# Terraform
+tf
+
 # Python
 ***.pyc
