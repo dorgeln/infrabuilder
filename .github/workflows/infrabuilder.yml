@@ -45,7 +45,7 @@ jobs:
 
       - name: Deploy system
         id: deploy
-        run: ansible-playbook -vvv site.yml
+        run: ansible-playbook site.yml
         env:
           DEPLOYMENT: ${{secrets.DEPLOYMENT}}
           WORKSPACE: ${{secrets.WORKSPACE}}
