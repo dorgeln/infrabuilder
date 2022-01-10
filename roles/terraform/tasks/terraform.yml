@@ -118,6 +118,20 @@
     - provider: "openstack"
   loop: "{{cmk_green_regions}}"
 
+- name: Create Terraform blue cmk config
+  template:
+    src: "instance.tf"
+    dest: "{{tf}}/{{deployment}}-{{workspace}}-{{color}}-{{id}}-{{region|lower}}.tf"
+    mode: '0600'
+  vars:
+    - color: "blue"
+    - id: "cmk"
+    - image: "{{cmk_green_image}}"
+    - flavour: "{{cmk_blue_flavour}}"
+    - region: "{{item}}"
+    - provider: "openstack"
+  loop: "{{cmk_blue_regions}}"
+
 #    - ssh.tf
 #    - instances.tf
 
