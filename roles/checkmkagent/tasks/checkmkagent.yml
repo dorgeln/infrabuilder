@@ -1,7 +1,7 @@
 - name: Install checkmkagent
   become: yes
   apt:
-    deb: http://gmm-mon.mamba.pm/mon/check_mk/agents/check-mk-agent_2.0.0p17-1_all.deb
+    deb: http://{{cmk_fqdn}}/mon/check_mk/agents/check-mk-agent_2.0.0p17-1_all.deb
     state: present
 
 

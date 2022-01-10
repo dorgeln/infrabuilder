@@ -5,16 +5,16 @@
 
 - name: Add all hosts to monitoring
   shell: |
-    curl "http://gmm-mon.mamba.pm/mon/check_mk/webapi.py?action=add_host&_username=automation&_secret={{cmk_secret}}" -d 'request={"hostname":"{{item}}.{{domain}}","folder":"","attributes":{"ipaddress":"{{hostvars[item].ansible_host}}","site":"mon","tag_agent":"cmk-agent"}}'
+    curl "http://{{cmk_fqdn}}/mon/check_mk/webapi.py?action=add_host&_username=automation&_secret={{cmk_secret}}" -d 'request={"hostname":"{{item}}.{{domain}}","folder":"","attributes":{"ipaddress":"{{hostvars[item].ansible_host}}","site":"mon","tag_agent":"cmk-agent"}}'
   loop: "{{ query('inventory_hostnames', 'all') }}"
 
 
 - name: Discover services on hosts
   shell: |
-    curl "http://gmm-mon.mamba.pm/mon/check_mk/webapi.py?action=discover_services&_username=automation&_secret={{cmk_secret}}" -d 'request={"hostname":"{{item}}.{{domain}}","mode":"fixall"}'
+    curl "http://{{cmk_fqdn}}/mon/check_mk/webapi.py?action=discover_services&_username=automation&_secret={{cmk_secret}}" -d 'request={"hostname":"{{item}}.{{domain}}","mode":"fixall"}'
   loop: "{{ query('inventory_hostnames', 'all') }}"
 
 - name: Activate changes
   shell: |
-    curl "http://gmm-mon.mamba.pm/mon/check_mk/webapi.py?_secret={{cmk_secret}}&_username=automation&action=activate_changes" -d 'request={"sites":["mon"]}'
+    curl "http://{{cmk_fqdn}}/mon/check_mk/webapi.py?_secret={{cmk_secret}}&_username=automation&action=activate_changes" -d 'request={"sites":["mon"]}'
 
