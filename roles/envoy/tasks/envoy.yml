@@ -18,5 +18,8 @@
     - Dockerfile
     - envoy.yaml
 
-- name: Start envoy
+- name: Build envoy
   shell: /home/ubuntu/.local/bin/docker-compose up --build -d
+
+- name: Restart envoy
+  shell: /home/ubuntu/.local/bin/docker-compose restart
