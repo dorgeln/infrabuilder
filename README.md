@@ -7,15 +7,13 @@ Your existing openstack configuration can be imported into github secrects using
 
 ```
 source .env
-
-#### 
 gh secret set DEPLOYMENT --body "gmm"
 gh secret set WORKSPACE --body "prod"
-gh secret set GMM_PROXY_GREEN_FLAVOR --body "D2-8"
-gh secret set GMM_BACKEND_GREEN_FLAVOR --body "D2-8"
-gh secret set GMM_PROXY_BLUE_FLAVOR --body "D2-8"
-gh secret set CMK_GREEN_FLAVOR --body "D2-8"
-gh secret set CMK_BLUE_FLAVOR --body "D2-8"
+gh secret set GMM_PROXY_GREEN_FLAVOR --body "d2-8"
+gh secret set GMM_BACKEND_GREEN_FLAVOR --body "d2-8"
+gh secret set GMM_PROXY_BLUE_FLAVOR --body "d2-8"
+gh secret set CMK_GREEN_FLAVOR --body "d2-8"
+gh secret set CMK_BLUE_FLAVOR --body "d2-8"
 gh secret set GMM_HOSTNAME --body "gmm"
 gh secret set GMM_HOSTNAME_GREEN --body "gmm-green"
 gh secret set GMM_HOSTNAME_BLUE --body "gmm-blue"
