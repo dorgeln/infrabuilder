@@ -4,7 +4,7 @@
   roles:
   - secrets
   - terraform
-  - ovhdns
+  # - ovhdns
   - certbot
   gather_facts: False
 
@@ -15,12 +15,7 @@
   gather_facts: False
 
 - hosts:
-    - gmm-proxy-green
-    - gmm-proxy-blue
-    - gmm-backend-green
-    - gmm-backend-blue
-    - gmm-cmk-green
-    - gmm-cmk-blue
+    - all
   roles:
     - system
     - docker
@@ -40,22 +35,22 @@
     - microserver
   gather_facts: True
 
-- hosts:
-    - gmm-cmk-green
-    - gmm-cmk-blue
-  roles:
-    - checkmk
-  gather_facts: True
+# - hosts:
+#     - gmm-cmk-green
+#     - gmm-cmk-blue
+#   roles:
+#     - checkmk
+#   gather_facts: True
 
-- hosts: 
-  - all
-  roles:
-  - checkmkagent
-  gather_facts: True
+# - hosts: 
+#   - all
+#   roles:
+#   - checkmkagent
+#   gather_facts: True
 
-- hosts:
-    - gmm-cmk-green
-    - gmm-cmk-blue
-  roles:
-    - checkmkaddhosts
-  gather_facts: True
+# - hosts:
+#     - gmm-cmk-green
+#     - gmm-cmk-blue
+#   roles:
+#     - checkmkaddhosts
+#   gather_facts: True

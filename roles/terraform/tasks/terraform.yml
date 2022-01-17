@@ -104,33 +104,49 @@
     - provider: "openstack"
   loop: "{{gmm_backend_blue_regions}}"
 
-- name: Create Terraform green cmk config
-  template:
-    src: "instance.tf"
-    dest: "{{tf}}/{{deployment}}-{{workspace}}-{{color}}-{{id}}-{{region|lower}}.tf"
-    mode: '0600'
-  vars:
-    - color: "green"
-    - id: "cmk"
-    - image: "{{cmk_green_image}}"
-    - flavour: "{{cmk_green_flavour}}"
-    - region: "{{item}}"
-    - provider: "openstack"
-  loop: "{{cmk_green_regions}}"
+# - name: Create Terraform green cmk config
+#   template:
+#     src: "instance.tf"
+#     dest: "{{tf}}/{{deployment}}-{{workspace}}-{{color}}-{{id}}-{{region|lower}}.tf"
+#     mode: '0600'
+#   vars:
+#     - color: "green"
+#     - id: "cmk"
+#     - image: "{{cmk_green_image}}"
+#     - flavour: "{{cmk_green_flavour}}"
+#     - region: "{{item}}"
+#     - provider: "openstack"
+#   loop: "{{cmk_green_regions}}"
 
-- name: Create Terraform blue cmk config
-  template:
-    src: "instance.tf"
-    dest: "{{tf}}/{{deployment}}-{{workspace}}-{{color}}-{{id}}-{{region|lower}}.tf"
-    mode: '0600'
-  vars:
-    - color: "blue"
-    - id: "cmk"
-    - image: "{{cmk_green_image}}"
-    - flavour: "{{cmk_blue_flavour}}"
-    - region: "{{item}}"
-    - provider: "openstack"
-  loop: "{{cmk_blue_regions}}"
+# - name: Create Terraform blue cmk config
+#   template:
+#     src: "instance.tf"
+#     dest: "{{tf}}/{{deployment}}-{{workspace}}-{{color}}-{{id}}-{{region|lower}}.tf"
+#     mode: '0600'
+#   vars:
+#     - color: "blue"
+#     - id: "cmk"
+#     - image: "{{cmk_green_image}}"
+#     - flavour: "{{cmk_blue_flavour}}"
+#     - region: "{{item}}"
+#     - provider: "openstack"
+#   loop: "{{cmk_blue_regions}}"
+
+
+# - name: Create Terraform green passbolt config
+#   template:
+#     src: "instance.tf"
+#     dest: "{{tf}}/{{deployment}}-{{workspace}}-{{color}}-{{id}}-{{region|lower}}.tf"
+#     mode: '0600'
+#   vars:
+#     - color: "green"
+#     - id: "pbt"
+#     - image: "{{pbt_green_image}}"
+#     - flavour: "{{pbt_green_flavour}}"
+#     - region: "{{item}}"
+#     - provider: "openstack"
+#   loop: "{{pbt_green_regions}}"
+
 
 #    - ssh.tf
 #    - instances.tf

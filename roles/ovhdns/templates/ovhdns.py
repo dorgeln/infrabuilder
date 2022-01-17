@@ -75,6 +75,27 @@ result = client.post( endpoint,
 print (f"POST {endpoint}",json.dumps(result, indent=4))
 {% endfor %}
 
+
+{% for h in groups[deployment+'-pbt-green'] %}
+result = client.post( endpoint,
+    fieldType='A',
+    subDomain='{{hostvars[h].inventory_hostname}}.{{domain}}.', 
+    target="{{hostvars[h].ansible_host}}", 
+    ttl=None,
+)
+print (f"POST {endpoint}",json.dumps(result, indent=4))
+{% endfor %}
+
+{% for h in groups[deployment+'-pbt-'+active] %}
+result = client.post( endpoint,
+    fieldType='A',
+    subDomain='{{pbt_fqdn}}.', 
+    target="{{hostvars[h].ansible_host}}", 
+    ttl=None,
+)
+print (f"POST {endpoint}",json.dumps(result, indent=4))
+{% endfor %}
+
 endpoint=f'/domain/zone/{domain}/refresh'
 result = client.post(endpoint)
 print (f"POST {endpoint}")
