@@ -1,5 +1,5 @@
 
-resource "ovh_domain_zone_record" "{{deployment}}-{{workspace}}-{{id}}-{{color}}-{{region|lower}}_dns_rr" {
+resource "ovh_domain_zone_record" "{{deployment}}-{{workspace}}-{{id}}-{{color}}-{{region|lower}}_{{hostname}}" {
   zone      = "{{domain}}"
   subdomain = "{{hostname}}"
   fieldtype = "A"

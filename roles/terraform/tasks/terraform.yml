@@ -105,7 +105,7 @@
 - name: Create Terraform proxy dns config
   template:
     src: "record_ovh.tf"
-    dest: "{{tf}}/{{deployment}}-{{workspace}}-{{color}}-{{id}}-{{region|lower}}_dns_rr.tf"
+    dest: "{{tf}}/{{deployment}}-{{workspace}}-{{color}}-{{id}}-{{region|lower}}_{{hostname}}.tf"
     mode: '0600'
   vars:
     - color: "{{active}}"
@@ -114,6 +114,35 @@
     - provider: "openstack"
     - hostname: "{{gmm_hostname}}"
   loop: "{{gmm_proxy_active_regions}}"
+
+- name: Create Terraform proxy green dns config
+  template:
+    src: "record_ovh.tf"
+    dest: "{{tf}}/{{deployment}}-{{workspace}}-{{color}}-{{id}}-{{region|lower}}_green.tf"
+    mode: '0600'
+  vars:
+    - color: "green"
+    - id: "proxy"
+    - region: "{{item}}"
+    - provider: "openstack"
+    - hostname: "{{gmm_hostname_green}}"
+  loop: "{{gmm_backend_green_regions}}"
+
+
+- name: Create Terraform proxy blue dns config
+  template:
+    src: "record_ovh.tf"
+    dest: "{{tf}}/{{deployment}}-{{workspace}}-{{color}}-{{id}}-{{region|lower}}_blue.tf"
+    mode: '0600'
+  vars:
+    - color: "blue"
+    - id: "proxy"
+    - region: "{{item}}"
+    - provider: "openstack"
+    - hostname: "{{gmm_hostname_blue}}"
+  loop: "{{gmm_backend_blue_regions}}"
+
+
 
 # - name: Create Terraform green cmk config
 #   template:
