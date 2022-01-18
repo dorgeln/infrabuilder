@@ -4,9 +4,9 @@
     state: directory
 
 - name: Create staging certs
-  shell: "certbot certonly --test-cert --dns-ovh --non-interactive --agree-tos -m {{email}} --dns-ovh-credentials .secrets/ovh.ini -d {{gmm_fqdn}} --work-dir {{certs}} --config-dir {{certs}} --logs-dir {{certs}}"
+  shell: "certbot certonly --force-renewal --test-cert --dns-ovh --non-interactive --agree-tos -m {{email}} --dns-ovh-credentials .secrets/ovh.ini -d {{gmm_fqdn_alias}} -d {{gmm_fqdn}} -d {{gmm_fqdn_green}} -d {{gmm_fqdn_blue}} --work-dir {{certs}} --config-dir {{certs}} --logs-dir {{certs}}"
   when: staging
 
 - name: Create Certs
-  shell: "certbot certonly --force-renewal --dns-ovh --non-interactive --agree-tos -m {{email}} --dns-ovh-credentials .secrets/ovh.ini -d {{gmm_fqdn}} --work-dir {{certs}} --config-dir {{certs}} --logs-dir {{certs}}"
+  shell: "certbot certonly --force-renewal --dns-ovh --non-interactive --agree-tos -m {{email}} --dns-ovh-credentials .secrets/ovh.ini -d {{gmm_fqdn_alias}} -d {{gmm_fqdn}} -d {{gmm_fqdn_green}} -d {{gmm_fqdn_blue}}  --work-dir {{certs}} --config-dir {{certs}} --logs-dir {{certs}}"
   when: not staging

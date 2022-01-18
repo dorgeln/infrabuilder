@@ -1,6 +1,6 @@
 ﻿- name: Copy Certs
   copy:
-    src: "{{certs}}/live/{{gmm_fqdn}}/{{item}}"
+    src: "{{certs}}/live/{{gmm_fqdn_alias}}/{{item}}"
     dest: "{{item}}"
     mode: '0600'
   with_items:

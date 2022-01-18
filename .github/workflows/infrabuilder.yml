@@ -56,6 +56,7 @@ jobs:
           EMAIL: ${{secrets.EMAIL}}
           STAGING: ${{secrets.STAGING}}
           GMM_HOSTNAME: ${{secrets.GMM_HOSTNAME}}
+          GMM_ALIAS: ${{secrets.GMM_ALIAS}}
           GMM_HOSTNAME_GREEN: ${{secrets.GMM_HOSTNAME_GREEN}}
           GMM_HOSTNAME_BLUE: ${{secrets.GMM_HOSTNAME_BLUE}}
           GMM_PROXY_GREEN_REGIONS: ${{secrets.GMM_PROXY_GREEN_REGIONS}}
