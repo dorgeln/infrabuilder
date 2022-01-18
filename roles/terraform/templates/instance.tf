@@ -15,7 +15,7 @@ resource "openstack_compute_instance_v2" "{{deployment}}-{{workspace}}-{{id}}-{{
    }
 }
 
-resource "ovh_domain_zone_record" "record_{{deployment}}-{{workspace}}-{{id}}-{{color}}-{{region|lower}}" {
+resource "ovh_domain_zone_record" "{{deployment}}-{{workspace}}-{{id}}-{{color}}-{{region|lower}}_dns_hostname" {
   zone      = "{{domain}}"
   subdomain = "{{deployment}}-{{workspace}}-{{id}}-{{color}}-{{region|lower}}"
   fieldtype = "A"

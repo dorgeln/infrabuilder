@@ -1,8 +1,0 @@
-﻿- name: Create DNS update
-  template:
-    src: "ovhdns.py"
-    dest: ".secrets/ovhdns.py"
-    mode: '0700'
-
-- name: Update DNS records
-  shell: .secrets/ovhdns.py

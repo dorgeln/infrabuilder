@@ -4,7 +4,6 @@
   roles:
   - secrets
   - terraform
-  # - ovhdns
   - certbot
   gather_facts: False
 
