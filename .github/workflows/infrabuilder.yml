@@ -26,6 +26,7 @@ jobs:
         run: ./micromamba create --file environment.yml --yes -r $PWD/.micromamba
 
       - name: Set PATH
+        shell: bash
         run: echo "${HOME}/.micromamba" >> $GITHUB_PATH
 
       - name: Ansible Galaxy
