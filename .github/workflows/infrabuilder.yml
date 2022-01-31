@@ -11,29 +11,9 @@ jobs:
     name: "infrabuilder"
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout builder
-        uses: actions/checkout@v2
-    
-      - name: Checkout state
-        uses: actions/checkout@v2
-        with:
-          repository: dorgeln/infrastate
-          ssh-key: ${{ secrets.SSH_DEPLOY_KEY }}
-          path: tf
-
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v1
-        with:
-          terraform_wrapper: false
-      
-      - name: Setup Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.9'
-          cache: 'pip'
-          
-      - name: Install Python dependencies
-        run: pip install -r requirements.txt
+      - name: Create env
+        id: env
+        run: ./micromamba create --file environment.yml --yes -r $PWD/.micromamba
         
       - name: Ansible Galaxy
         id: galaxy
