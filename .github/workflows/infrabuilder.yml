@@ -39,12 +39,32 @@ jobs:
         env:
           DEPLOYMENT: ${{secrets.DEPLOYMENT}}
           WORKSPACE: ${{secrets.WORKSPACE}}
-          ACTIVE: ${{secrets.ACTIVE}}
           DOMAIN: ${{secrets.DOMAIN}}
+          FQDN: ${{secrets.FQDN}}      
+          ALIASES: ${{secrets.ALIASES}}        
           PROVIDER: ${{secrets.PROVIDER}}
           USER: ${{secrets.USER}}
           EMAIL: ${{secrets.EMAIL}}
           STAGING: ${{secrets.STAGING}}
+          ACTIVE: ${{secrets.ACTIVE}}
+
+          GRA_ID: ${{secrets.GRA_ID}}
+          GRA_HOSTNAME: ${{secrets.GRA_HOSTNAME}}
+          GRA_DOMAIN: ${{secrets.GRA_DOMAIN}}
+          GRA_REGION: ${{secrets.GRA_REGION}}
+          GRA_IMAGE: ${{secrets.GRA_IMAGE}}
+          GRA_FLAVOR: ${{secrets.GRA_FLAVOR}}
+          GRA_PASSWORD: ${{secrets.GRA_PASSWORD}}
+
+          CMK_ID: ${{secrets.CMK_ID}}
+          CMK_HOSTNAME: ${{secrets.CMK_HOSTNAME}}
+          CMK_DOMAIN: ${{secrets.CMK_DOMAIN}}
+          CMK_REGION: ${{secrets.CMK_REGION}}
+          CMK_IMAGE: ${{secrets.CMK_IMAGE}}
+          CMK_FLAVOR: ${{secrets.CMK_FLAVOR}}
+          CMK_PASSWORD: ${{secrets.CMK_PASSWORD}}
+          CMK_SECRET: ${{secrets.CMK_SECRET}}
+
           GMM_HOSTNAME: ${{secrets.GMM_HOSTNAME}}
           GMM_ALIAS: ${{secrets.GMM_ALIAS}}
           GMM_HOSTNAME_GREEN: ${{secrets.GMM_HOSTNAME_GREEN}}
@@ -61,17 +81,7 @@ jobs:
           GMM_BACKEND_BLUE_REGIONS: ${{secrets.GMM_BACKEND_BLUE_REGIONS}}
           GMM_BACKEND_BLUE_IMAGE: ${{secrets.GMM_BACKEND_BLUE_IMAGE}}
           GMM_BACKEND_BLUE_FLAVOR: ${{secrets.GMM_BACKEND_BLUE_FLAVOR}}
-          CMK_HOSTNAME: ${{secrets.CMK_HOSTNAME}}
-          CMK_HOSTNAME_GREEN: ${{secrets.CMK_HOSTNAME_GREEN}}
-          CMK_HOSTNAME_BLUE: ${{secrets.CMK_HOSTNAME_BLUE}}
-          CMK_PASSWORD: ${{secrets.CMK_PASSWORD}}
-          CMK_SECRET: ${{secrets.CMK_SECRET}}
-          CMK_GREEN_REGIONS: ${{secrets.CMK_GREEN_REGIONS}}
-          CMK_GREEN_IMAGE: ${{secrets.CMK_GREEN_IMAGE}}
-          CMK_GREEN_FLAVOR: ${{secrets.CMK_GREEN_FLAVOR}}
-          CMK_BLUE_REGIONS: ${{secrets.CMK_BLUE_REGIONS}}
-          CMK_BLUE_IMAGE: ${{secrets.CMK_BLUE_IMAGE}}
-          CMK_BLUE_FLAVOR: ${{secrets.CMK_BLUE_FLAVOR}}
+
           TF_VAR_endpoint: ${{secrets.TF_VAR_endpoint}}
           TF_VAR_application_key: ${{secrets.TF_VAR_application_key}}
           TF_VAR_application_secret: ${{secrets.TF_VAR_application_secret}}

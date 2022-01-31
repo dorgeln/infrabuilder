@@ -68,7 +68,8 @@ gh secret set TF_VAR_password --body "$TF_VAR_password"
 gh secret set TF_VAR_user_domain_name --body "$TF_VAR_user_domain_name"
 gh secret set TF_VAR_tenant_name --body "$TF_VAR_tenant_name"
 gh secret set TF_VAR_tenant_id --body "$TF_VAR_tenant_id"
-
+gh secret set SSH_KEY_PUB --body "$SSH_KEY_PUB"
+gh secret set SSH_DEPLOY_KEY --body "$SSH_DEPLOY_KEY"
 
 ```
 
