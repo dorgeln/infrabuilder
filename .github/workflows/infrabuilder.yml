@@ -11,6 +11,16 @@ jobs:
     name: "infrabuilder"
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout builder
+        uses: actions/checkout@v2
+    
+      - name: Checkout state
+        uses: actions/checkout@v2
+        with:
+          repository: dorgeln/infrastate
+          ssh-key: ${{ secrets.SSH_DEPLOY_KEY }}
+          path: tf
+
       - name: Create env
         id: env
         run: ./micromamba create --file environment.yml --yes -r $PWD/.micromamba
