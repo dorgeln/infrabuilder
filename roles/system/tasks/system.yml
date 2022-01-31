@@ -45,6 +45,7 @@
         - bzip2
         - nmon
         - conmon
+        - unzip
         #- gh
         # - docker-compose
     state: present

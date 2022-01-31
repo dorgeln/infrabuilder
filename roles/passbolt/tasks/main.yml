@@ -1,4 +1,0 @@
----
-- name: Install passbolt
-  import_tasks: passbolt.yml
-  tags: passbolt

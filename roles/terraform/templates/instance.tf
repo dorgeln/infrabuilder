@@ -1,11 +1,11 @@
-resource "openstack_compute_instance_v2" "{{deployment}}-{{workspace}}-{{id}}-{{color}}-{{region|lower}}" {
-   name        = "{{deployment}}-{{workspace}}-{{id}}-{{color}}-{{region|lower}}"  # Instance name
+resource "openstack_compute_instance_v2" "{{name}}" {
+   name        = "{{name}}"  # Instance name
    provider    = {{provider}}  # Provider name
    region = "{{region}}"
    image_name  = "{{image}}" # Image name
    flavor_name = "{{flavour}}" # Instance type name
    metadata = {
-     group = "{{deployment}}-{{id}}-{{color}}"
+     group = "{{group}}"
      ansible_user = "{{user}}"
      domain = "{{domain}}"
    }
@@ -15,9 +15,10 @@ resource "openstack_compute_instance_v2" "{{deployment}}-{{workspace}}-{{id}}-{{
    }
 }
 
-resource "ovh_domain_zone_record" "{{deployment}}-{{workspace}}-{{id}}-{{color}}-{{region|lower}}_dns_hostname" {
+resource "ovh_domain_zone_record" "{{name}}_dns_hostname" {
   zone      = "{{domain}}"
-  subdomain = "{{deployment}}-{{workspace}}-{{id}}-{{color}}-{{region|lower}}"
+  subdomain = "{{name}}"
   fieldtype = "A"
-  target    = "${openstack_compute_instance_v2.{{deployment}}-{{workspace}}-{{id}}-{{color}}-{{region|lower}}.network[0].fixed_ip_v4}"
+  ttl = "60"
+  target    = "${openstack_compute_instance_v2.{{name}}.network[0].fixed_ip_v4}"
 }

@@ -1,4 +1,6 @@
 ---
+
+
 - hosts:
   - localhost
   roles:
@@ -6,6 +8,9 @@
   - terraform
   - certbot
   gather_facts: False
+  vars_files:
+    - env.yml
+  
 
 - hosts: 
   - all
@@ -19,37 +24,64 @@
     - system
     - docker
   gather_facts: True
+  vars_files:
+    - env.yml
 
 - hosts:
-    - gmm-proxy-green
-    - gmm-proxy-blue
+    - "{{cmk_group}}"
+  roles:
+    - checkmk
+  gather_facts: True
+  vars_files:
+    - env.yml
+
+- hosts:
+    - "{{gra_group}}"
+  roles:
+    - grafana
+    - loki
+    - promtail
+  gather_facts: True
+  vars_files:
+    - env.yml
+
+- hosts:
+    - "{{deployment}}-proxy-green"
+    - "{{deployment}}-proxy-blue"
   roles:
     - envoy
   gather_facts: True
+  vars_files:
+    - env.yml
 
 - hosts:
-    - gmm-backend-green
-    - gmm-backend-blue
+    - "{{deployment}}-backend-green"
+    - "{{deployment}}-backend-blue"
   roles:
     - microserver
   gather_facts: True
+  vars_files:
+    - env.yml
 
-# - hosts:
-#     - gmm-cmk-green
-#     - gmm-cmk-blue
-#   roles:
-#     - checkmk
-#   gather_facts: True
 
-# - hosts: 
-#   - all
-#   roles:
-#   - checkmkagent
-#   gather_facts: True
+- hosts: 
+  - all
+  roles:
+  - wait
+  gather_facts: True
 
-# - hosts:
-#     - gmm-cmk-green
-#     - gmm-cmk-blue
-#   roles:
-#     - checkmkaddhosts
-#   gather_facts: True
+- hosts: 
+  - all
+  roles:
+  - checkmkagent
+  gather_facts: True
+  vars_files:
+    - env.yml
+
+- hosts:
+    - "{{cmk_group}}"
+  roles:
+    - checkmkaddhosts
+  gather_facts: True
+  vars_files:
+    - env.yml

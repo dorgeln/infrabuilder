@@ -30,6 +30,12 @@
     - terraform.tf
     - id_rsa.pub
 
+- name: Create Terraform DNS provider
+  template:
+    src: "domain_ovh.tf"
+    dest: "{{tf}}/domain.tf"
+    mode: '0600'
+
 - name: Create Terraform SSH config
   template:
     src: "ssh.tf"
@@ -39,31 +45,73 @@
     - region: "{{item}}"
     - provider: "openstack"
   loop: "{{regions}}"
+  #loop: "{{lookup('vars', 'regions',wantlist=True)}}"
 
-- name: Create Terraform DNS provider
-  template:
-    src: "domain_ovh.tf"
-    dest: "{{tf}}/domain.tf"
-    mode: '0600'
+#
+# Grafana
+#
 
-- name: Create Terraform green proxy config
+- name: Create Terraform Grafana config
   template:
     src: "instance.tf"
-    dest: "{{tf}}/{{deployment}}-{{workspace}}-{{color}}-{{id}}-{{region|lower}}.tf"
+    dest: "{{tf}}/{{name}}.tf"
     mode: '0600'
   vars:
-    - color: "green"
-    - id: "proxy"
-    - image: "{{gmm_proxy_green_image}}"
-    - flavour: "{{gmm_proxy_green_flavour}}"
-    - region: "{{item}}"
+    - name: "{{gra_name}}"
+    - group: "{{gra_group}}"
+    - image: "{{gra_image}}"
+    - flavour: "{{gra_flavor}}"
+    - region: "{{gra_region}}"
     - provider: "openstack"
-  loop: "{{gmm_proxy_green_regions}}"
+
+
+- name: Create Terraform Grafana DNS config
+  template:
+    src: "record_ovh.tf"
+    dest: "{{tf}}/{{name}}_dns_{{hostname}}.tf"
+    mode: '0600'
+  vars:
+    - name: "{{gra_name}}"
+    - hostname: "{{gra_hostname}}"
+    - id: "{{gra_id}}"
+    - region: "{{gra_region}}"
+
+#
+# CheckMK
+#
+
+- name: Create Terraform CheckMK config
+  template:
+    src: "instance.tf"
+    dest: "{{tf}}/{{name}}.tf"
+    mode: '0600'
+  vars:
+    - name: "{{cmk_name}}"
+    - group: "{{cmk_group}}"
+    - image: "{{cmk_image}}"
+    - flavour: "{{cmk_flavor}}"
+    - region: "{{cmk_region}}"
+    - provider: "openstack"
+
+- name: Create Terraform CheckMK DNS config
+  template:
+    src: "record_ovh.tf"
+    dest: "{{tf}}/{{name}}_dns_{{hostname}}.tf"
+    mode: '0600'
+  vars:
+    - name: "{{cmk_name}}"
+    - hostname: "{{cmk_hostname}}"
+    - id: "{{cmk_id}}"
+    - region: "{{cmk_region}}"
+
+#
+# Backend
+#
 
 - name: Create Terraform green backend config
   template:
-    src: "instance.tf"
-    dest: "{{tf}}/{{deployment}}-{{workspace}}-{{color}}-{{id}}-{{region|lower}}.tf"
+    src: "instance_color.tf"
+    dest: "{{tf}}/{{name}}.tf"
     mode: '0600'
   vars:
     - color: "green"
@@ -72,53 +120,49 @@
     - flavour: "{{gmm_backend_green_flavour}}"
     - region: "{{item}}"
     - provider: "openstack"
+    - name: "{{deployment}}-{{workspace}}-{{color}}-{{id}}-{{region|lower}}"
   loop: "{{gmm_backend_green_regions}}"
 
 - name: Create Terraform blue proxy config
   template:
-    src: "instance.tf"
-    dest: "{{tf}}/{{deployment}}-{{workspace}}-{{color}}-{{id}}-{{region|lower}}.tf"
-    mode: '0600'
-  vars:
-    - color: "blue"
-    - id: "proxy"
-    - image: "{{gmm_proxy_blue_image}}"
-    - flavour: "{{gmm_proxy_blue_flavour}}"
-    - region: "{{item}}"
-    - provider: "openstack"
-  loop: "{{gmm_proxy_blue_regions}}"
-
-- name: Create Terraform blue backend config
-  template:
-    src: "instance.tf"
-    dest: "{{tf}}/{{deployment}}-{{workspace}}-{{color}}-{{id}}-{{region|lower}}.tf"
+    src: "instance_color.tf"
+    dest: "{{tf}}/{{name}}.tf"
     mode: '0600'
   vars:
     - color: "blue"
     - id: "backend"
-    - image: "{{gmm_backend_blue_image}}"
+    - image: "{{gmm_backend_green_image}}"
     - flavour: "{{gmm_backend_blue_flavour}}"
     - region: "{{item}}"
     - provider: "openstack"
+    - name: "{{deployment}}-{{workspace}}-{{color}}-{{id}}-{{region|lower}}"
   loop: "{{gmm_backend_blue_regions}}"
 
-- name: Create Terraform proxy dns config
+#
+# Proxy
+#
+
+- name: Create Terraform green proxy config
   template:
-    src: "record_ovh.tf"
-    dest: "{{tf}}/{{deployment}}-{{workspace}}-{{color}}-{{id}}-{{region|lower}}_{{hostname}}.tf"
+    src: "instance_color.tf"
+    dest: "{{tf}}/{{name}}.tf"
     mode: '0600'
   vars:
-    - color: "{{active}}"
+    - color: "green"
     - id: "proxy"
+    - image: "{{gmm_proxy_green_image}}"
+    - flavour: "{{gmm_proxy_green_flavour}}"
     - region: "{{item}}"
     - provider: "openstack"
-    - hostname: "{{gmm_hostname}}"
+    - name: "{{deployment}}-{{workspace}}-{{color}}-{{id}}-{{region|lower}}"
+  loop: "{{gmm_proxy_green_regions}}"
+
   loop: "{{gmm_proxy_active_regions}}"
 
 - name: Create Terraform proxy green dns config
   template:
     src: "record_ovh.tf"
-    dest: "{{tf}}/{{deployment}}-{{workspace}}-{{color}}-{{id}}-{{region|lower}}_green.tf"
+    dest: "{{tf}}/{{name}}_dns_{{hostname}}.tf"
     mode: '0600'
   vars:
     - color: "green"
@@ -126,13 +170,28 @@
     - region: "{{item}}"
     - provider: "openstack"
     - hostname: "{{gmm_hostname_green}}"
+    - name: "{{deployment}}-{{workspace}}-{{color}}-{{id}}-{{region|lower}}"
   loop: "{{gmm_backend_green_regions}}"
 
+- name: Create Terraform blue proxy config
+  template:
+    src: "instance_color.tf"
+    dest: "{{tf}}/{{name}}.tf"
+    mode: '0600'
+  vars:
+    - color: "blue"
+    - id: "proxy"
+    - image: "{{gmm_proxy_green_image}}"
+    - flavour: "{{gmm_proxy_blue_flavour}}"
+    - region: "{{item}}"
+    - provider: "openstack"
+    - name: "{{deployment}}-{{workspace}}-{{color}}-{{id}}-{{region|lower}}"
+  loop: "{{gmm_proxy_blue_regions}}"
 
 - name: Create Terraform proxy blue dns config
   template:
     src: "record_ovh.tf"
-    dest: "{{tf}}/{{deployment}}-{{workspace}}-{{color}}-{{id}}-{{region|lower}}_blue.tf"
+    dest: "{{tf}}/{{name}}_dns_{{hostname}}.tf"
     mode: '0600'
   vars:
     - color: "blue"
@@ -140,56 +199,26 @@
     - region: "{{item}}"
     - provider: "openstack"
     - hostname: "{{gmm_hostname_blue}}"
+    - name: "{{deployment}}-{{workspace}}-{{color}}-{{id}}-{{region|lower}}"
   loop: "{{gmm_backend_blue_regions}}"
 
+- name: Create Terraform proxy dns config
+  template:
+    src: "record_ovh.tf"
+    dest: "{{tf}}/{{name}}_dns_{{hostname}}.tf"
+    mode: '0600'
+  vars:
+    - color: "{{active}}"
+    - id: "proxy"
+    - region: "{{item}}"
+    - provider: "openstack"
+    - hostname: "{{gmm_hostname}}"
+    - name: "{{deployment}}-{{workspace}}-{{color}}-{{id}}-{{region|lower}}"
+  loop: "{{gmm_proxy_active_regions}}"
 
-
-# - name: Create Terraform green cmk config
-#   template:
-#     src: "instance.tf"
-#     dest: "{{tf}}/{{deployment}}-{{workspace}}-{{color}}-{{id}}-{{region|lower}}.tf"
-#     mode: '0600'
-#   vars:
-#     - color: "green"
-#     - id: "cmk"
-#     - image: "{{cmk_green_image}}"
-#     - flavour: "{{cmk_green_flavour}}"
-#     - region: "{{item}}"
-#     - provider: "openstack"
-#   loop: "{{cmk_green_regions}}"
-
-# - name: Create Terraform blue cmk config
-#   template:
-#     src: "instance.tf"
-#     dest: "{{tf}}/{{deployment}}-{{workspace}}-{{color}}-{{id}}-{{region|lower}}.tf"
-#     mode: '0600'
-#   vars:
-#     - color: "blue"
-#     - id: "cmk"
-#     - image: "{{cmk_green_image}}"
-#     - flavour: "{{cmk_blue_flavour}}"
-#     - region: "{{item}}"
-#     - provider: "openstack"
-#   loop: "{{cmk_blue_regions}}"
-
-
-# - name: Create Terraform green passbolt config
-#   template:
-#     src: "instance.tf"
-#     dest: "{{tf}}/{{deployment}}-{{workspace}}-{{color}}-{{id}}-{{region|lower}}.tf"
-#     mode: '0600'
-#   vars:
-#     - color: "green"
-#     - id: "pbt"
-#     - image: "{{pbt_green_image}}"
-#     - flavour: "{{pbt_green_flavour}}"
-#     - region: "{{item}}"
-#     - provider: "openstack"
-#   loop: "{{pbt_green_regions}}"
-
-
-#    - ssh.tf
-#    - instances.tf
+#
+# DEPLOY
+#
 
 - name: Deploy instances
   community.general.terraform:

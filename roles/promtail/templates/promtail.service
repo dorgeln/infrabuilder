@@ -1,0 +1,15 @@
+[Unit]
+Description=Loki service
+After=network.target
+
+[Service]
+Type=simple
+EnvironmentFile=/etc/default/grafana-server
+User=grafana
+Group=grafana
+Type=simple
+Restart=on-failure
+ExecStart=/usr/local/bin/promtail --config.file  /etc/promtail/promtail.yaml
+
+[Install]
+WantedBy=multi-user.target
