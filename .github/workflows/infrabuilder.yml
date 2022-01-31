@@ -24,7 +24,10 @@ jobs:
       - name: Create env
         id: env
         run: ./micromamba create --file environment.yml --yes -r $PWD/.micromamba
-        
+
+      - name: Set PATH
+        run: echo "${HOME}/.micromamba" >> $GITHUB_PATH
+
       - name: Ansible Galaxy
         id: galaxy
         run: |
