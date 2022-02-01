@@ -11,37 +11,33 @@ Your existing openstack configuration can be imported into github secrects using
 
 ```
 source .env
-gh secret set DEPLOYMENT --body "gmm"
+gh secret set DEPLOYMENT --body "$DEPLOYMENT"
 gh secret set WORKSPACE --body "prod"
+gh secret set STAGING --body "False"
+gh secret set ALIAS --body "$ALIAS"
+gh secret set ALIAS2 --body "$ALIAS2"
 gh secret set DOMAIN --body "$DOMAIN"
-gh secret set FQDN --body "$FQDN"
-gh secret set ALIASES --body "$ALIASES"
+gh secret set DOMAIN2 --body "$DOMAIN2"
+gh secret set ACTIVE --body "$ACTIVE"
 gh secret set PROVIDER --body "$PROVIDER"
 gh secret set USER --body "$USER"
 gh secret set EMAIL --body "$EMAIL"
-gh secret set STAGING --body "False"
-gh secret set ACTIVE --body "$ACTIVE"
+
 
 gh secret set GRA_ID --body "$GRA_ID"
-gh secret set GRA_HOSTNAME --body "$GRA_HOSTNAME"
-gh secret set GRA_DOMAIN --body "$GRA_DOMAIN"
 gh secret set GRA_REGION --body "$GRA_REGION"
 gh secret set GRA_IMAGE --body "$GRA_IMAGE"
 gh secret set GRA_FLAVOR --body "$GRA_FLAVOR"
 gh secret set GRA_PASSWORD --body "$GRA_PASSWORD"
 
 gh secret set CMK_ID --body "$CMK_ID"
-gh secret set CMK_HOSTNAME --body "$CMK_HOSTNAME"
-gh secret set CMK_DOMAIN --body "$CMK_DOMAIN"
 gh secret set CMK_REGION --body "$CMK_REGION"
 gh secret set CMK_IMAGE --body "$CMK_IMAGE"
 gh secret set CMK_FLAVOR --body "$CMK_FLAVOR"
 gh secret set CMK_PASSWORD --body "$CMK_PASSWORD"
 gh secret set CMK_SECRET --body "$CMK_SECRET"
 
-gh secret set GMM_HOSTNAME --body "quant-gmm-prod"
-gh secret set GMM_HOSTNAME_GREEN --body "quant-gmm-prod-green"
-gh secret set GMM_HOSTNAME_BLUE --body "quant-gmm-prod-blue"
+gh secret set GMM_ID --body "$GMM_ID
 gh secret set GMM_PROXY_GREEN_REGIONS --body "$GMM_PROXY_GREEN_REGIONS"
 gh secret set GMM_PROXY_GREEN_IMAGE --body "$GMM_PROXY_GREEN_IMAGE"
 gh secret set GMM_PROXY_GREEN_FLAVOR --body "$GMM_PROXY_GREEN_FLAVOR"
@@ -69,7 +65,8 @@ gh secret set TF_VAR_user_domain_name --body "$TF_VAR_user_domain_name"
 gh secret set TF_VAR_tenant_name --body "$TF_VAR_tenant_name"
 gh secret set TF_VAR_tenant_id --body "$TF_VAR_tenant_id"
 gh secret set SSH_KEY_PUB --body "$SSH_KEY_PUB"
-gh secret set SSH_DEPLOY_KEY --body "$SSH_DEPLOY_KEY"
+gh secret set SSH_KEY_PRIV --body "$SSH_KEY_PRIV"
+gh secret set SSH_DEPLOY_KEY --body "$SSH_KEY_PRIV"
 
 ```
 

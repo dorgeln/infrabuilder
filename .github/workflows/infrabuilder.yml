@@ -27,7 +27,9 @@ jobs:
 
       - name: Set PATH
         shell: bash
-        run: echo "${HOME}/.micromamba" >> $GITHUB_PATH
+        run: |
+          echo "${HOME}/.micromamba" >> $GITHUB_PATH
+          echo GITHUB_PATH: $GITHUB_PATH
 
       - name: Ansible Galaxy
         id: galaxy
