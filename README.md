@@ -37,7 +37,7 @@ gh secret set CMK_FLAVOR --body "$CMK_FLAVOR"
 gh secret set CMK_PASSWORD --body "$CMK_PASSWORD"
 gh secret set CMK_SECRET --body "$CMK_SECRET"
 
-gh secret set GMM_ID --body "$GMM_ID
+gh secret set GMM_ID --body "$GMM_ID"
 gh secret set GMM_PROXY_GREEN_REGIONS --body "$GMM_PROXY_GREEN_REGIONS"
 gh secret set GMM_PROXY_GREEN_IMAGE --body "$GMM_PROXY_GREEN_IMAGE"
 gh secret set GMM_PROXY_GREEN_FLAVOR --body "$GMM_PROXY_GREEN_FLAVOR"
