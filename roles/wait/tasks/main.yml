@@ -1,8 +1,8 @@
 ---
-# - name: Sleep for 60 seconds
-#   wait_for:
-#     timeout: 60
-#   delegate_to: localhost
+- name: Sleep for 60 seconds
+  wait_for:
+    timeout: 60
+  delegate_to: localhost
 
 
 - name: Wait for connections
