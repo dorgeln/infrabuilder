@@ -45,36 +45,30 @@ jobs:
         env:
           DEPLOYMENT: ${{secrets.DEPLOYMENT}}
           WORKSPACE: ${{secrets.WORKSPACE}}
+          STAGING: ${{secrets.STAGING}}
+          ALIAS: ${{secrets.ALIAS}}     
+          ALIAS2: ${{secrets.ALIAS2}}   
           DOMAIN: ${{secrets.DOMAIN}}
-          FQDN: ${{secrets.FQDN}}      
-          ALIASES: ${{secrets.ALIASES}}        
+          DOMAIN2: ${{secrets.DOMAIN}}
+          ACTIVE: ${{secrets.ACTIVE}}
           PROVIDER: ${{secrets.PROVIDER}}
           USER: ${{secrets.USER}}
           EMAIL: ${{secrets.EMAIL}}
-          STAGING: ${{secrets.STAGING}}
-          ACTIVE: ${{secrets.ACTIVE}}
 
           GRA_ID: ${{secrets.GRA_ID}}
-          GRA_HOSTNAME: ${{secrets.GRA_HOSTNAME}}
-          GRA_DOMAIN: ${{secrets.GRA_DOMAIN}}
           GRA_REGION: ${{secrets.GRA_REGION}}
           GRA_IMAGE: ${{secrets.GRA_IMAGE}}
           GRA_FLAVOR: ${{secrets.GRA_FLAVOR}}
           GRA_PASSWORD: ${{secrets.GRA_PASSWORD}}
 
           CMK_ID: ${{secrets.CMK_ID}}
-          CMK_HOSTNAME: ${{secrets.CMK_HOSTNAME}}
-          CMK_DOMAIN: ${{secrets.CMK_DOMAIN}}
           CMK_REGION: ${{secrets.CMK_REGION}}
           CMK_IMAGE: ${{secrets.CMK_IMAGE}}
           CMK_FLAVOR: ${{secrets.CMK_FLAVOR}}
           CMK_PASSWORD: ${{secrets.CMK_PASSWORD}}
           CMK_SECRET: ${{secrets.CMK_SECRET}}
 
-          GMM_HOSTNAME: ${{secrets.GMM_HOSTNAME}}
-          GMM_ALIAS: ${{secrets.GMM_ALIAS}}
-          GMM_HOSTNAME_GREEN: ${{secrets.GMM_HOSTNAME_GREEN}}
-          GMM_HOSTNAME_BLUE: ${{secrets.GMM_HOSTNAME_BLUE}}
+          GMM_ID: ${{secrets.GMM_ID}}
           GMM_PROXY_GREEN_REGIONS: ${{secrets.GMM_PROXY_GREEN_REGIONS}}
           GMM_PROXY_GREEN_IMAGE: ${{secrets.GMM_PROXY_GREEN_IMAGE}}
           GMM_PROXY_GREEN_FLAVOR: ${{secrets.GMM_PROXY_GREEN_FLAVOR}}
