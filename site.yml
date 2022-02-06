@@ -40,7 +40,6 @@
   roles:
     - grafana
     - loki
-    - promtail
   gather_facts: True
   vars_files:
     - env.yml
@@ -63,7 +62,6 @@
   vars_files:
     - env.yml
 
-
 - hosts: 
   - all
   roles:
@@ -74,6 +72,7 @@
   - all
   roles:
   - checkmkagent
+  - promtail
   gather_facts: True
   vars_files:
     - env.yml

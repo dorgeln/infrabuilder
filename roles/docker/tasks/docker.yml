@@ -18,6 +18,27 @@
     name: docker-ce
     state: present
 
+- name: Add Docker Loki driver
+  become: yes
+  shell: docker plugin install grafana/loki-docker-driver:latest --alias loki --grant-all-permissions
+  ignore_errors: yes
+
+- name:  Configure Docker Loki driver
+  become: yes
+  template:
+    src: "{{item}}"
+    dest: "/etc/docker/{{item}}"
+    mode: '0644'
+  with_items:
+    - daemon.json
+
+- name: Stop docker
+  service:
+    name: docker
+    state: stopped
+    enabled: true
+  ignore_errors: yes
+
 - name: Enable docker
   service:
     name: docker

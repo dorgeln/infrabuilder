@@ -8,13 +8,14 @@
   with_items:
     - atrawog
 
-# - name: Add Github Repo Keys
-#   become: yes
-#   shell: curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo gpg --dearmor -o /usr/share/keyrings/githubcli-archive-keyring.gpg
+- name: Add letsencrypt-stg-root-x1
+  become: yes 
+  get_url:
+    url: "https://letsencrypt.org/certs/staging/letsencrypt-stg-root-x1.pem"
+    dest: "/etc/ssl/certs/letsencrypt-stg-root-x1.pem"
+    mode: '0440'
+  when: staging
 
-# - name: Add Github Repo
-#   become: yes
-#   shell: echo "deb [[arch=amd64 signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
 
 - name: Upgrade packages
   become: yes

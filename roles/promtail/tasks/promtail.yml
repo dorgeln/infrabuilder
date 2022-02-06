@@ -16,8 +16,8 @@
   become: yes
   file:
     path: "/etc/promtail"
-    owner: "grafana"
-    group: "grafana"
+    owner: "root"
+    group: "root"
     state: directory
 
 - name: Create promtail config
@@ -26,8 +26,8 @@
     src: "{{item}}"
     dest: "/etc/promtail/{{item}}"
     mode: '0640'
-    owner: "grafana"
-    group: "grafana"
+    owner: "root"
+    group: "root"
   with_items:
     - promtail.yaml
 
