@@ -40,6 +40,7 @@
   roles:
     - grafana
     - loki
+    - prometheus
   gather_facts: True
   vars_files:
     - env.yml

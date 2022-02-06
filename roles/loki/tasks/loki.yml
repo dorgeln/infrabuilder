@@ -34,7 +34,6 @@
   with_items:
     - loki.yaml
 
-
 - name: Create loki service config
   become: yes
   template:

@@ -16,4 +16,14 @@ scrape_configs:
     static_configs:
       - labels:
           job: docker
+          host: {{ansible_hostname}}
           __path__: /var/lib/docker/containers/*/*-json.log
+  - job_name: journal
+    journal:
+      max_age: 12h
+      labels:
+        job: journal
+        host: {{ansible_hostname}}
+    relabel_configs:
+      - source_labels: ['__journal__systemd_unit']
+        target_label: 'unit'
