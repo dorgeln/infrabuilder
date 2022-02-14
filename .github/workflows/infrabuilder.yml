@@ -49,7 +49,7 @@ jobs:
           ALIAS: ${{secrets.ALIAS}}     
           ALIAS2: ${{secrets.ALIAS2}}   
           DOMAIN: ${{secrets.DOMAIN}}
-          DOMAIN2: ${{secrets.DOMAIN}}
+          DOMAIN2: ${{secrets.DOMAIN2}}
           ACTIVE: ${{secrets.ACTIVE}}
           PROVIDER: ${{secrets.PROVIDER}}
           USER: ${{secrets.USER}}
