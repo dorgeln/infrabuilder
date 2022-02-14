@@ -1,9 +1,4 @@
 
-- name: Create certbot directory
-  file:
-    path: ".certbot"
-    state: directory
-
 - name: Create certs directory
   file:
     path: "{{certs}}"
@@ -13,7 +8,7 @@
 - name: Create OVH config
   template:
     src: "{{item}}"
-    dest: ".certbot/{{item}}"
+    dest: ".secrets/{{item}}"
     mode: '0600'
   with_items:
     - ovh.ini
@@ -21,7 +16,7 @@
 - name: Create certbot script
   template:
     src: "{{item}}"
-    dest: ".certbot/{{item}}"
+    dest: "{{certs}}/{{item}}"
     mode: '0700'
   with_items:
     - certbot.sh
@@ -31,7 +26,7 @@
 - name: Create certs
   shell: "./certbot.sh"
   args:
-    chdir: ".certbot"
+    chdir: "{{certs}}"
 
 # - name: Create staging certs
 #   shell: "certbot certonly --force-renewal --test-cert --dns-ovh --non-interactive --agree-tos -m {{email}} --dns-ovh-credentials .secrets/ovh.ini -d {{gmm_fqdn}} -d {{gmm_fqdn_green}} -d {{gmm_fqdn_blue}} -d gmm-test.snakepit.net --work-dir {{certs}} --config-dir {{certs}} --logs-dir {{certs}} --dns-ovh-propagation-seconds 60"
