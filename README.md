@@ -11,9 +11,13 @@ Your existing openstack configuration can be imported into github secrects using
 
 ```
 source .env
-gh secret set DEPLOYMENT --body "$DEPLOYMENT"
 gh secret set WORKSPACE --body "prod"
 gh secret set STAGING --body "False"
+
+gh secret set GMM_PROXY_GREEN_FLAVOR --body "D2-8"
+gh secret set GMM_BACKEND_GREEN_FLAVOR --body "D2-8"
+
+gh secret set DEPLOYMENT --body "$DEPLOYMENT"
 gh secret set ALIAS --body "$ALIAS"
 gh secret set ALIAS2 --body "$ALIAS2"
 gh secret set DOMAIN --body "$DOMAIN"
@@ -40,13 +44,13 @@ gh secret set CMK_SECRET --body "$CMK_SECRET"
 gh secret set GMM_ID --body "$GMM_ID"
 gh secret set GMM_PROXY_GREEN_REGIONS --body "$GMM_PROXY_GREEN_REGIONS"
 gh secret set GMM_PROXY_GREEN_IMAGE --body "$GMM_PROXY_GREEN_IMAGE"
-gh secret set GMM_PROXY_GREEN_FLAVOR --body "$GMM_PROXY_GREEN_FLAVOR"
+
 gh secret set GMM_BACKEND_GREEN_REGIONS --body "$GMM_BACKEND_GREEN_REGIONS"
 gh secret set GMM_BACKEND_GREEN_IMAGE --body "$GMM_BACKEND_GREEN_IMAGE"
-gh secret set GMM_BACKEND_GREEN_FLAVOR --body "$GMM_BACKEND_GREEN_FLAVOR"
+
 gh secret set GMM_PROXY_BLUE_REGIONS --body "$GMM_PROXY_BLUE_REGIONS"
 gh secret set GMM_PROXY_BLUE_IMAGE --body "$GMM_PROXY_BLUE_IMAGE"
-gh secret set GMM_PROXY_BLUE_FLAVOR --body "$GMM_PROXY_BLUE_FLAVOR"
+
 gh secret set GMM_BACKEND_BLUE_REGIONS --body "$GMM_BACKEND_BLUE_REGIONS"
 gh secret set GMM_BACKEND_BLUE_IMAGE --body "$GMM_BACKEND_BLUE_IMAGE"
 gh secret set GMM_BACKEND_BLUE_FLAVOR --body "$GMM_BACKEND_BLUE_FLAVOR"
