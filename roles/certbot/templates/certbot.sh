@@ -1,4 +1,4 @@
-../.micromamba/envs/default/bin/certbot certonly {% if staging %}--test-cert{% endif %} \
+../.micromamba/envs/default/bin/certbot certonly --force-renewal {% if staging %}--test-cert{% endif %} \
     --dns-ovh --non-interactive --agree-tos \
     -m {{email}} --dns-ovh-credentials ./ovh.ini \
     --cert-name {{fqdn}} -d {{fqdn}} \

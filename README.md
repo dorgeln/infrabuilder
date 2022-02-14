@@ -14,8 +14,8 @@ source .env
 gh secret set WORKSPACE --body "prod"
 gh secret set STAGING --body "False"
 
-gh secret set GMM_PROXY_GREEN_FLAVOR --body "D2-8"
-gh secret set GMM_BACKEND_GREEN_FLAVOR --body "D2-8"
+gh secret set GMM_PROXY_GREEN_FLAVOR --body "d2-8"
+gh secret set GMM_BACKEND_GREEN_FLAVOR --body "d2-8"
 
 gh secret set DEPLOYMENT --body "$DEPLOYMENT"
 gh secret set ALIAS --body "$ALIAS"
